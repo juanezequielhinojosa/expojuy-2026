@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SectionTitle from '../components/SectionTitle.astro';
+import Icon from '../components/Icon.astro';
 import { faqs } from '../data/faqs';
 ---
 
@@ -8,7 +9,7 @@ import { faqs } from '../data/faqs';
   title="Preguntas frecuentes"
   description="Respuestas a las dudas más comunes sobre ExpoJuy 2026."
 >
-  <section class="section">
+  <section class="section section-decor">
     <div class="container narrow">
       <SectionTitle
         kicker="Ayuda"
@@ -19,7 +20,10 @@ import { faqs } from '../data/faqs';
       <div class="faq-list">
         {faqs.map((f, i) => (
           <details class="faq-item" open={i === 0}>
-            <summary>{f.q}</summary>
+            <summary>
+              <Icon name="chevron" size={18} />
+              <span>{f.q}</span>
+            </summary>
             <p>{f.a}</p>
           </details>
         ))}
@@ -41,5 +45,35 @@ import { faqs } from '../data/faqs';
   .more-help {
     margin-top: 1.5rem;
     text-align: center;
+  }
+
+  .faq-item summary {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.6rem;
+    padding: 1.1rem 1.3rem;
+    font-family: var(--font-head);
+    font-weight: 600;
+    color: var(--brand-900);
+    list-style: none;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::after {
+    display: none;
+  }
+
+  .faq-item summary svg {
+    flex: none;
+    color: var(--accent-gold-dark);
+    transition: transform 0.2s ease;
+  }
+
+  .faq-item[open] summary svg {
+    transform: rotate(90deg);
   }
 </style>

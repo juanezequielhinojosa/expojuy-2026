@@ -1,22 +1,25 @@
 ---
 import type { Exhibitor } from '../data/exhibitors';
+import SectorIcon from './SectorIcon.astro';
+import Icon from './Icon.astro';
 
 interface Props {
   exhibitor: Exhibitor;
   index?: number;
 }
 
-const { exhibitor, index } = Astro.props;
-const initial = exhibitor.name.charAt(0);
+const { exhibitor } = Astro.props;
 ---
 
 <article class="ex-card">
-  <div class="ex-avatar" aria-hidden="true">{initial}</div>
+  <SectorIcon rubro={exhibitor.rubro} size="md" />
   <div class="ex-body">
     <h3 class="ex-name">{exhibitor.name}</h3>
     <p class="ex-org">
       <span class="chip">{exhibitor.rubro}</span>
-      <span class="ex-origin">{exhibitor.origin}</span>
+      <span class="ex-origin">
+        <Icon name="mappin" size={13} /> {exhibitor.origin}
+      </span>
     </p>
     <p class="ex-desc">{exhibitor.description}</p>
   </div>
@@ -30,25 +33,13 @@ const initial = exhibitor.name.charAt(0);
     border: 1px solid var(--line);
     border-radius: var(--radius);
     padding: 1.25rem;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   }
 
   .ex-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
     box-shadow: var(--shadow);
-  }
-
-  .ex-avatar {
-    flex: 0 0 52px;
-    height: 52px;
-    border-radius: 12px;
-    display: grid;
-    place-items: center;
-    font-family: var(--font-head);
-    font-weight: 700;
-    font-size: 1.3rem;
-    color: #fff;
-    background: linear-gradient(135deg, var(--brand-700), var(--brand-900));
+    border-color: rgba(4, 68, 99, 0.35);
   }
 
   .ex-body {
@@ -69,6 +60,9 @@ const initial = exhibitor.name.charAt(0);
   }
 
   .ex-origin {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
     font-size: 0.85rem;
     color: var(--muted);
   }

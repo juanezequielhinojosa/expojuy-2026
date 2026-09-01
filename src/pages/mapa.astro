@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SectionTitle from '../components/SectionTitle.astro';
+import Icon from '../components/Icon.astro';
 ---
 
 <Layout
@@ -25,13 +26,25 @@ import SectionTitle from '../components/SectionTitle.astro';
           ></iframe>
         </div>
 
-        <aside class="map-info">
+<aside class="map-info">
           <h3>Accesos y recomendaciones</h3>
           <ul class="plain-list">
-            <li><strong>Dirección:</strong> Predio ferial de la Ciudad Cultural, San Salvador de Jujuy.</li>
-            <li><strong>Centro:</strong> a pocos minutos del centro de la ciudad capital.</li>
-            <li><strong>Transporte:</strong> líneas de colectivo urbano con paradas en el predio y estacionamiento para autos.</li>
-            <li><strong>Accesibilidad:</strong> rampas y recorridos accesibles en todo el predio.</li>
+            <li>
+              <Icon name="mappin" size={17} />
+              <span><strong>Dirección:</strong> Predio ferial de la Ciudad Cultural, San Salvador de Jujuy.</span>
+            </li>
+            <li>
+              <Icon name="building" size={17} />
+              <span><strong>Centro:</strong> a pocos minutos del centro de la ciudad capital.</span>
+            </li>
+            <li>
+              <Icon name="truck" size={17} />
+              <span><strong>Transporte:</strong> líneas de colectivo urbano con paradas en el predio y estacionamiento para autos.</span>
+            </li>
+            <li>
+              <Icon name="heart" size={17} />
+              <span><strong>Accesibilidad:</strong> rampas y recorridos accesibles en todo el predio.</span>
+            </li>
           </ul>
 
           <div class="plano-note">
@@ -71,12 +84,26 @@ import SectionTitle from '../components/SectionTitle.astro';
   }
 
   .plain-list {
-    padding-left: 1.2rem;
+    list-style: none;
+    padding: 0;
     margin: 0;
   }
 
   .plain-list li {
-    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .plain-list li > span {
+    flex: 1;
+  }
+
+  .plain-list li > svg {
+    flex: none;
+    margin-top: 0.2rem;
+    color: var(--brand-700);
   }
 
   .plano-note {

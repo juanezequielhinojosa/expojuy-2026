@@ -1,6 +1,30 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SectionTitle from '../components/SectionTitle.astro';
+import Icon from '../components/Icon.astro';
+
+const ejes = [
+  {
+    icon: 'globe',
+    title: 'Corredor Bioceánico de Capricornio',
+    text: 'La feria se proyecta como plataforma de integración con Chile, Paraguay, Brasil y Bolivia, conectando la oferta local con la demanda internacional.',
+  },
+  {
+    icon: 'gem',
+    title: 'Minería sustentable',
+    text: 'La cadena de valor minera es uno de los ejes centrales de la edición 2026, con énfasis en la Puna y el litio.',
+  },
+  {
+    icon: 'cpu',
+    title: 'Economía del Conocimiento',
+    text: 'Tecnología, innovación y talento jujeño, con iniciativas como el Desafío Digital ExpoJuy 2026.',
+  },
+  {
+    icon: 'mountain',
+    title: 'Interior provincial',
+    text: 'Potenciar la participación de productores y emprendedores de todas las localidades de Jujuy.',
+  },
+];
 ---
 
 <Layout
@@ -31,32 +55,35 @@ import SectionTitle from '../components/SectionTitle.astro';
       </p>
 
       <h3>Nuestros ejes</h3>
-      <ul class="plain-list">
-        <li>
-          <strong>Corredor Bioceánico de Capricornio:</strong> la feria se
-          proyecta como plataforma de integración con Chile, Paraguay, Brasil y
-          Bolivia, conectando la oferta local con la demanda internacional.
-        </li>
-        <li>
-          <strong>Minería sustentable:</strong> la cadena de valor minera es uno
-          de los ejes centrales de la edición 2026, con énfasis en la Puna y el
-          litio.
-        </li>
-        <li>
-          <strong>Economía del Conocimiento:</strong> tecnología, innovación y
-          talento jujeño, con iniciativas como el Desafío Digital ExpoJuy 2026.
-        </li>
-        <li>
-          <strong>Interior provincial:</strong> potenciar la participación de
-          productores y emprendedores de todas las localidades de Jujuy.
-        </li>
-      </ul>
+      <div class="ejes-list">
+        {
+          ejes.map((e) => (
+            <div class="eje">
+              <span class="icon-circle">
+                <Icon name={e.icon} size={22} strokeWidth={1.8} />
+              </span>
+              <div>
+                <strong>{e.title}:</strong> {e.text}
+              </div>
+            </div>
+          ))
+        }
+      </div>
 
       <h3>Datos útiles</h3>
       <ul class="plain-list">
-        <li><strong>Lugar:</strong> Ciudad Cultural, San Salvador de Jujuy, Argentina.</li>
-        <li><strong>Fechas:</strong> del 9 al 12 de octubre de 2026.</li>
-        <li><strong>Accesos:</strong> con entrada general; consultá la sección entradas para novedades.</li>
+        <li>
+          <Icon name="mappin" size={16} />
+          <span><strong>Lugar:</strong> Ciudad Cultural, San Salvador de Jujuy, Argentina.</span>
+        </li>
+        <li>
+          <Icon name="calendar" size={16} />
+          <span><strong>Fechas:</strong> del 9 al 12 de octubre de 2026.</span>
+        </li>
+        <li>
+          <Icon name="ticket" size={16} />
+          <span><strong>Accesos:</strong> con entrada general; consultá la sección entradas para novedades.</span>
+        </li>
       </ul>
 
       <div class="note">
@@ -76,12 +103,47 @@ import SectionTitle from '../components/SectionTitle.astro';
   }
 
   .plain-list {
-    padding-left: 1.2rem;
+    list-style: none;
+    padding: 0;
     margin: 0 0 1.5rem;
   }
 
   .plain-list li {
-    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .plain-list li > span {
+    flex: 1;
+  }
+
+  .plain-list li > svg {
+    flex: none;
+    margin-top: 0.2rem;
+    color: var(--brand-700);
+  }
+
+  .ejes-list {
+    display: grid;
+    gap: 1rem;
+    margin: 0 0 1.5rem;
+  }
+
+  .eje {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+    box-shadow: var(--shadow);
+  }
+
+  .eje strong {
+    color: var(--brand-900);
   }
 
   .note {

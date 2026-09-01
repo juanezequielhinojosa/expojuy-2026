@@ -7,7 +7,13 @@ const current = Astro.url.pathname;
 <header class="site-header">
   <div class="container header-top">
     <a class="brand" href="/" aria-label="ExpoJuy 2026 — Inicio">
-      <span class="brand-mark" aria-hidden="true">EJ</span>
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="34" cy="14" r="7" fill="#e8a33d" />
+          <path d="M4 34 16 18l7 10 5-6 12 16v6H4Z" fill="#ffffff" opacity="0.55" />
+          <path d="M8 44V34l8-16 7 10 5-6 12 16v6Z" fill="#ffffff" />
+        </svg>
+      </span>
       <span class="brand-text">Expo<span>Juy</span> <b>2026</b></span>
     </a>
 
@@ -79,9 +85,14 @@ const current = Astro.url.pathname;
     width: 42px;
     height: 42px;
     border-radius: 12px;
-    background: var(--brand-800);
-    color: #fff;
-    font-weight: 700;
+    background: linear-gradient(135deg, var(--brand-700), var(--brand-900));
+    box-shadow: 0 6px 14px -6px rgba(3, 47, 71, 0.5);
+    overflow: hidden;
+  }
+
+  .brand-mark svg {
+    width: 100%;
+    height: 100%;
   }
 
   .brand-text {

@@ -1,7 +1,24 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SectionTitle from '../components/SectionTitle.astro';
+import Icon from '../components/Icon.astro';
 import { agenda, days } from '../data/agenda';
+
+const dayIcons: Record<string, string> = {
+  vie9: 'sun',
+  sab10: 'calendar',
+  dom11: 'heart',
+  lun12: 'award',
+};
+
+const typeIcons: Record<string, string> = {
+  Institucional: 'building',
+  Negocios: 'truck',
+  Charlas: 'mic',
+  Cultural: 'heart',
+  Foros: 'users',
+  Feria: 'cart',
+};
 ---
 
 <Layout
@@ -27,6 +44,7 @@ import { agenda, days } from '../data/agenda';
             tabindex={i === 0 ? '0' : '-1'}
             data-tab={d.id}
           >
+            <Icon name={dayIcons[d.id] ?? 'calendar'} size={16} />
             {d.label}
           </button>
         ))}
@@ -58,7 +76,12 @@ import { agenda, days } from '../data/agenda';
                     <tr>
                       <td>{a.time}</td>
                       <td>{a.title}</td>
-                      <td><span class="chip">{a.type}</span></td>
+                      <td>
+                        <span class="chip type-chip">
+                          <Icon name={typeIcons[a.type] ?? 'info'} size={14} />
+                          {a.type}
+                        </span>
+                      </td>
                       <td>{a.place}</td>
                     </tr>
                   ))}
@@ -75,6 +98,22 @@ import { agenda, days } from '../data/agenda';
 <style>
   .tab-panel[hidden] {
     display: none;
+  }
+
+  .tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .type-chip {
+    white-space: nowrap;
+  }
+
+  .agenda-table td:first-child {
+    font-weight: 600;
+    color: var(--brand-800);
+    white-space: nowrap;
   }
 </style>
 

@@ -17,7 +17,7 @@ import { news } from '../data/news';
         lede="Anuncios de la organización, novedades de la feria y actividades destacadas."
       />
       <div class="grid grid-2">
-        {news.map((item) => <NewsCard item={item} />)}
+        {news.map((item, i) => <NewsCard item={item} index={i} />)}
       </div>
     </div>
   </section>

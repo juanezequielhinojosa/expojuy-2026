@@ -1,7 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SectionTitle from '../components/SectionTitle.astro';
+import Icon from '../components/Icon.astro';
+import SocialIcon from '../components/SocialIcon.astro';
 import { site } from '../data/site';
+
+const socialKey: Record<string, string> = {
+  Instagram: 'instagram',
+  Facebook: 'facebook',
+  'X / Twitter': 'x',
+  LinkedIn: 'linkedin',
+  YouTube: 'youtube',
+};
 ---
 
 <Layout
@@ -51,9 +61,15 @@ import { site } from '../data/site';
 
       <aside class="contact-side">
         <h3>Organización</h3>
-        <p>{site.organizer}</p>
-        <p>
-          <a href={`mailto:${site.email}`}>{site.email}</a>
+        <p class="org-row">
+          <Icon name="building" size={17} />
+          <span>{site.organizer}</span>
+        </p>
+        <p class="org-row mail">
+          <Icon name="mail" size={17} />
+          <span>
+            <a href={`mailto:${site.email}`}>{site.email}</a>
+          </span>
         </p>
 
         <h3>Redes sociales</h3>
@@ -61,7 +77,10 @@ import { site } from '../data/site';
           {site.social.map((s) => (
             <li>
               <a href={s.url} target="_blank" rel="noopener noreferrer">
-                {s.name}
+                <span class="social-tile">
+                  <SocialIcon name={socialKey[s.name] ?? 'globe'} size={18} />
+                  {s.name}
+                </span>
               </a>
             </li>
           ))}
@@ -106,6 +125,23 @@ import { site } from '../data/site';
     margin-top: 1.5rem;
   }
 
+  .org-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    margin: 0 0 0.6rem;
+  }
+
+  .org-row svg {
+    flex: none;
+    margin-top: 0.2rem;
+    color: var(--brand-700);
+  }
+
+  .org-row.mail a {
+    font-weight: 600;
+  }
+
   .social-list {
     list-style: none;
     padding: 0;
@@ -113,7 +149,33 @@ import { site } from '../data/site';
   }
 
   .social-list li {
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .social-list a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .social-tile {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 0.85rem;
+    border: 1px solid rgba(4, 68, 99, 0.2);
+    border-radius: 999px;
+    background: rgba(4, 68, 99, 0.06);
+    transition: all 0.2s ease;
+  }
+
+  .social-tile:hover {
+    border-color: var(--brand-800);
+    background: rgba(4, 68, 99, 0.1);
+  }
+
+  .social-tile svg {
+    color: var(--brand-800);
   }
 
   .note {

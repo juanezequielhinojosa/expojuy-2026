@@ -1,17 +1,48 @@
 ---
 import { site } from '../data/site';
+import SocialIcon from './SocialIcon.astro';
+import Icon from './Icon.astro';
+
+const socialNames: Record<string, string> = {
+  instagram: 'Instagram',
+  facebook: 'Facebook',
+  x: 'X / Twitter',
+  linkedin: 'LinkedIn',
+  youtube: 'YouTube',
+};
+
+const socialKey = (name: string): string => {
+  const n = name.toLowerCase();
+  if (n.includes('instagram')) return 'instagram';
+  if (n.includes('facebook')) return 'facebook';
+  if (n.includes('twitter') || n.includes('x /')) return 'x';
+  if (n.includes('linkedin')) return 'linkedin';
+  if (n.includes('youtube')) return 'youtube';
+  return 'globe';
+};
 ---
 
 <footer class="site-footer">
   <div class="container">
     <div class="footer-grid">
-      <div>
-        <h3>{site.name}</h3>
-        <p>
-          {site.tagline}. {site.dates} en el predio de la Ciudad Cultural de San
-          Salvador de Jujuy.
-        </p>
+      <div class="footer-brand">
+        <span class="footer-logo" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="34" cy="14" r="7" fill="#e8a33d" />
+            <path d="M4 34 16 18l7 10 5-6 12 16v6H4Z" fill="#ffffff" opacity="0.55" />
+            <path d="M8 44V34l8-16 7 10 5-6 12 16v6Z" fill="#ffffff" />
+          </svg>
+        </span>
+        <div>
+          <h3>{site.name}</h3>
+          <p class="footer-tagline">{site.tagline}</p>
+        </div>
       </div>
+      <p class="footer-desc">
+        {site.dates} en el predio de la Ciudad Cultural de San Salvador de
+        Jujuy. Empresas, productores, servicios, cultura y negocios
+        internacionales del NOA.
+      </p>
 
       <div>
         <h3>Enlaces</h3>
@@ -19,7 +50,9 @@ import { site } from '../data/site';
           {
             site.navigation.slice(0, 5).map((item) => (
               <li>
-                <a href={item.href}>{item.label}</a>
+                <a href={item.href}>
+                  <Icon name="chevron" size={14} class="link-chev" /> {item.label}
+                </a>
               </li>
             ))
           }
@@ -28,8 +61,10 @@ import { site } from '../data/site';
 
       <div>
         <h3>Organiza</h3>
-        <p>{site.organizer}</p>
-        <p>
+        <p class="footer-org">
+          <Icon name="building" size={16} /> {site.organizer}
+        </p>
+        <p class="footer-org sub">
           Con el acompañamiento del Ministerio de Desarrollo Económico y
           Producción de la Provincia de Jujuy.
         </p>
@@ -37,30 +72,93 @@ import { site } from '../data/site';
 
       <div>
         <h3>Redes</h3>
-        <ul class="footer-links">
+        <ul class="footer-social">
           {
-            site.social.map((s) => (
-              <li>
-                <a href={s.url} target="_blank" rel="noopener noreferrer">
-                  {s.name} · {s.label}
-                </a>
-              </li>
-            ))
+            site.social.map((s) => {
+              const key = socialKey(s.name);
+              return (
+                <li>
+                  <a href={s.url} target="_blank" rel="noopener noreferrer" aria-label={s.name}>
+                    <span class="social-pill">
+                      <SocialIcon name={key} size={16} />
+                      {socialNames[key] ?? s.name}
+                      <Icon name="external" size={13} />
+                    </span>
+                  </a>
+                </li>
+              );
+            })
           }
         </ul>
-        <p>
-          <a href={`mailto:${site.email}`}>{site.email}</a>
+        <p class="footer-mail">
+          <a href={`mailto:${site.email}`}>
+            <Icon name="mail" size={15} /> {site.email}
+          </a>
         </p>
       </div>
     </div>
-    <div class="footer-bottom">
-      © 2026 {site.name} — Propuesta conceptual para el Desafío Digital ExpoJuy
-      2026. Sitio no oficial.
+
+    <div class="footer-legal">
+      <span>© 2026 {site.name}</span>
+      <span>Propuesta conceptual · Desafío Digital ExpoJuy 2026</span>
+      <span>Sitio no oficial</span>
     </div>
   </div>
 </footer>
 
 <style>
+  .footer-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 2fr 1fr 1fr 1.3fr;
+  }
+
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    grid-column: 1 / -1;
+  }
+
+  .footer-logo {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #0a74a5, #032f47);
+    overflow: hidden;
+    box-shadow: 0 10px 22px -8px rgba(0, 0, 0, 0.5);
+  }
+
+  .footer-logo svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .footer-brand h3 {
+    color: #fff;
+    font-size: 1.15rem;
+    margin: 0;
+  }
+
+  .footer-tagline {
+    margin: 0;
+    color: var(--accent-gold);
+    font-size: 0.9rem;
+  }
+
+  .footer-desc {
+    margin: 0;
+    max-width: 34em;
+  }
+
+  .site-footer h3 {
+    color: #fff;
+    font-size: 1.02rem;
+    margin-bottom: 0.9rem;
+  }
+
   .footer-links {
     list-style: none;
     padding: 0;
@@ -68,6 +166,81 @@ import { site } from '../data/site';
   }
 
   .footer-links li {
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .footer-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .link-chev {
+    color: var(--accent-gold);
+  }
+
+  .footer-org {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin: 0 0 0.8rem;
+  }
+
+  .footer-org.sub {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.9rem;
+  }
+
+  .footer-social {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .social-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.4rem 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    transition: all 0.2s ease;
+  }
+
+  .social-pill:hover {
+    border-color: var(--accent-gold);
+    background: rgba(232, 163, 61, 0.14);
+  }
+
+  .footer-mail a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .footer-legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.4rem;
+    margin-top: 2.5rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  @media (max-width: 960px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

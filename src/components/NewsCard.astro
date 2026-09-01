@@ -1,57 +1,136 @@
 ---
 import type { NewsItem } from '../data/news';
+import Icon from './Icon.astro';
 
 interface Props {
   item: NewsItem;
+  index?: number;
 }
 
-const { item } = Astro.props;
+const { item, index = 0 } = Astro.props;
 
 const pretty = new Intl.DateTimeFormat('es-AR', {
   day: 'numeric',
   month: 'long',
   year: 'numeric',
 }).format(new Date(item.date + 'T12:00:00'));
+
+const COVERS: { icon: string; from: string; to: string }[] = [
+  { icon: 'globe', from: '#065a82', to: '#032f47' },
+  { icon: 'zap', from: '#8a63d2', to: '#3d1f7a' },
+  { icon: 'sparkles', from: '#c98220', to: '#7c4a0e' },
+  { icon: 'building', from: '#2f9dbb', to: '#0d4d5f' },
+  { icon: 'truck', from: '#d4703f', to: '#7c321d' },
+  { icon: 'users', from: '#57a44a', to: '#2f6b2c' },
+];
+
+const cover = COVERS[index % COVERS.length];
 ---
 
 <article class="news-card">
-  <time class="news-date" datetime={item.date}>{pretty}</time>
-  <h3>{item.title}</h3>
-  <p>{item.excerpt}</p>
-  <a href="#novedades" aria-hidden="true" tabindex="-1">Leer más →</a>
+  <div class="news-cover" style={`--g1:${cover.from};--g2:${cover.to}`}>
+    <span class="news-ico" aria-hidden="true">
+      <Icon name={cover.icon} size={30} strokeWidth={1.7} />
+    </span>
+    <time class="news-date" datetime={item.date}>
+      {pretty}
+    </time>
+  </div>
+  <div class="news-body">
+    <h3>{item.title}</h3>
+    <p>{item.excerpt}</p>
+    <a href="#novedades" tabindex="-1" aria-hidden="true">
+      Leer más <Icon name="arrow" size={15} />
+    </a>
+  </div>
 </article>
 
 <style>
   .news-card {
-    background: var(--bg-alt);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
     box-shadow: var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .news-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -18px rgba(3, 47, 71, 0.28);
+  }
+
+  .news-cover {
+    position: relative;
+    min-height: 120px;
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(220px 120px at 85% -20%, rgba(255, 255, 255, 0.22), transparent 60%),
+      linear-gradient(135deg, var(--g1), var(--g2));
+    overflow: hidden;
+  }
+
+  .news-cover::after {
+    content: '';
+    position: absolute;
+    inset: auto -30% -55% -12%;
+    height: 70%;
+    background: rgba(255, 255, 255, 0.07);
+    transform: skewY(-4deg);
+  }
+
+  .news-ico {
+    display: grid;
+    place-items: center;
+    width: 66px;
+    height: 66px;
+    border-radius: 18px;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 14px 30px -10px rgba(0, 0, 0, 0.4);
   }
 
   .news-date {
-    font-size: 0.82rem;
+    position: absolute;
+    left: 0.9rem;
+    bottom: 0.7rem;
+    font-size: 0.72rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--accent-terracotta);
+    color: rgba(255, 255, 255, 0.92);
+    background: rgba(0, 0, 0, 0.28);
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    backdrop-filter: blur(4px);
   }
 
-  .news-card h3 {
-    font-size: 1.15rem;
+  .news-body {
+    padding: 1.35rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .news-body h3 {
+    font-size: 1.12rem;
     margin: 0;
   }
 
-  .news-card p {
+  .news-body p {
     margin: 0;
     flex: 1;
   }
 
-  .news-card a {
+  .news-body a {
     width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-weight: 600;
   }
 </style>
