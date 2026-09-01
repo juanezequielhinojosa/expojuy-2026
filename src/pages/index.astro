@@ -1,0 +1,216 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import NewsCard from '../components/NewsCard.astro';
+import { site } from '../data/site';
+import { news } from '../data/news';
+---
+
+<Layout
+  title={site.title}
+  description="ExpoJuy 2026: la muestra multisectorial más importante del norte argentino. Del 9 al 12 de octubre en la Ciudad Cultural, San Salvador de Jujuy."
+>
+  <Hero />
+
+  <section class="section" aria-labelledby="en-una-mirada">
+    <div class="container">
+      <SectionTitle
+        kicker="En una mirada"
+        title="El encuentro productivo e institucional del NOA"
+        lede="Un punto de encuentro entre la producción jujeña y los mercados nacionales e internacionales."
+      />
+      <div class="stats-grid">
+        <div class="stat">
+          <span class="stat-num">200+</span>
+          <span class="stat-label">stands de empresas e instituciones</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">30.000</span>
+          <span class="stat-label">visitantes esperados</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">4</span>
+          <span class="stat-label">días de feria, rondas y actividades</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">4</span>
+          <span class="stat-label">países del Corredor Bioceánico</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" aria-labelledby="sectores">
+    <div class="container">
+      <SectionTitle
+        kicker="Sectores"
+        title="La diversidad productiva de Jujuy"
+        lede="Minería, agroindustria, turismo, tecnología y más, en una sola vidriera."
+      />
+      <div class="sector-tags">
+        {
+          ['Minería', 'Agroindustria', 'Turismo', 'Industria', 'Comercio', 'Servicios', 'Tecnología', 'Artesanías'].map(
+            (s) => <a class="sector-chip" href={`/expositores/?rubro=${encodeURIComponent(s)}`}>{s}</a>,
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="destacados-agenda">
+    <div class="container">
+      <SectionTitle
+        kicker="Agenda"
+        title="Destacados del programa"
+        lede="Rondas de negocios internacionales, foros sectoriales y una agenda cultural que recorre la identidad jujeña."
+      />
+      <div class="feature-list">
+        <article class="feature">
+          <h3>Rondas de negocios</h3>
+          <p>
+            Encuentros entre empresas locales y delegaciones de Argentina,
+            Chile, Paraguay y Brasil vinculados al Corredor Bioceánico de
+            Capricornio.
+          </p>
+        </article>
+        <article class="feature">
+          <h3>Foros sectoriales</h3>
+          <p>
+            Minería sustentable, economía del conocimiento, turismo de la
+            Quebrada y Puna, y oportunidades para el interior provincial.
+          </p>
+        </article>
+        <article class="feature">
+          <h3>Cultura y tradición</h3>
+          <p>
+            Espectáculos en vivo, feria de artesanos, gastronomía regional y la
+            identidad del norte argentino en cada jornada.
+          </p>
+        </article>
+      </div>
+      <p style="text-align: center; margin-top: 1.75rem">
+        <a class="btn btn-primary" href="/agenda/">Ver la agenda completa</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="novedades" aria-labelledby="novedades">
+    <div class="container">
+      <SectionTitle kicker="Novedades" title="Noticias de ExpoJuy 2026" />
+      <div class="grid grid-2">
+        {news.slice(0, 3).map((item) => <NewsCard item={item} />)}
+      </div>
+      <p style="text-align: center; margin-top: 1.75rem">
+        <a class="btn btn-outline" href="/noticias/">Todas las noticias</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="cta">
+    <div class="container">
+      <div class="cta-band">
+        <div>
+          <h2>¿Querés ser parte de ExpoJuy 2026?</h2>
+          <p>
+            Expositor, sponsor o visitante: escribinos y sumá tu propuesta al
+            encuentro más convocante del norte argentino.
+          </p>
+        </div>
+        <a class="btn btn-accent" href="/contacto/">Contáctanos</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .stat {
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+
+  .stat-num {
+    display: block;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 2.3rem;
+    color: var(--brand-800);
+  }
+
+  .stat-label {
+    color: var(--muted);
+  }
+
+  .sector-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+
+  .sector-chip {
+    display: inline-block;
+    padding: 0.7rem 1.4rem;
+    border: 1px solid var(--brand-800);
+    color: var(--brand-800);
+    border-radius: 999px;
+    font-weight: 600;
+    background: transparent;
+    transition: all 0.2s ease;
+  }
+
+  .sector-chip:hover {
+    background: var(--brand-800);
+    color: #fff;
+  }
+
+  .feature-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .feature {
+    background: var(--bg-alt);
+    border-top: 4px solid var(--accent-gold);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+
+  .feature h3 {
+    font-size: 1.15rem;
+  }
+
+  .cta-band {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    background: var(--brand-900);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 2.2rem 2.5rem;
+    box-shadow: var(--shadow);
+  }
+
+  .cta-band h2 {
+    color: #fff;
+    margin: 0 0 0.4rem;
+  }
+
+  .cta-band p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 40em;
+  }
+</style>

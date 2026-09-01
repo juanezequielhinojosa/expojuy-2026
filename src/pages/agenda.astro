@@ -1,0 +1,106 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import { agenda, days } from '../data/agenda';
+---
+
+<Layout
+  title="Agenda"
+  description="Agenda de actividades de ExpoJuy 2026, del 9 al 12 de octubre en la Ciudad Cultural de Jujuy."
+>
+  <section class="section">
+    <div class="container">
+      <SectionTitle
+        kicker="Agenda 2026"
+        title="Programa de actividades"
+        lede="Cuatro días con rondas de negocios, foros, ferias y espectáculos. Programa sujeto a confirmación oficial."
+      />
+
+      <div class="tabs" role="tablist" aria-label="Días de la feria" data-tabs>
+        {days.map((d, i) => (
+          <button
+            class="tab-btn"
+            id={`tab-${d.id}`}
+            role="tab"
+            aria-controls={`panel-${d.id}`}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            tabindex={i === 0 ? '0' : '-1'}
+            data-tab={d.id}
+          >
+            {d.label}
+          </button>
+        ))}
+      </div>
+
+      {days.map((d, idx) => {
+        const items = agenda.filter((a) => a.day === d.id);
+        return (
+          <div
+            class="tab-panel"
+            id={`panel-${d.id}`}
+            role="tabpanel"
+            aria-labelledby={`tab-${d.id}`}
+            data-panel={d.id}
+            hidden={idx !== 0}
+          >
+            <div class="table-wrap">
+              <table class="agenda-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Hora</th>
+                    <th scope="col">Actividad</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Lugar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {items.map((a) => (
+                    <tr>
+                      <td>{a.time}</td>
+                      <td>{a.title}</td>
+                      <td><span class="chip">{a.type}</span></td>
+                      <td>{a.place}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .tab-panel[hidden] {
+    display: none;
+  }
+</style>
+
+<script>
+  const tabs = document.querySelector('[data-tabs]');
+  const panels = Array.from(document.querySelectorAll('[data-panel]'));
+
+  const show = (id) => {
+    for (const btn of tabs?.querySelectorAll('[data-tab]') ?? []) {
+      const selected = btn.dataset.tab === id;
+      btn.setAttribute('aria-selected', String(selected));
+      btn.tabIndex = selected ? 0 : -1;
+    }
+    for (const panel of panels) {
+      panel.hidden = panel.dataset.panel !== id;
+    }
+  };
+
+  tabs?.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-tab]');
+    if (btn) {
+      show(btn.dataset.tab);
+      btn.focus();
+    }
+  });
+
+  const firstTab = tabs?.querySelector('[data-tab]');
+  if (firstTab) show(firstTab.dataset.tab);
+</script>

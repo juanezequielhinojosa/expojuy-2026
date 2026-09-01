@@ -1,0 +1,28 @@
+export const site = {
+  title: 'ExpoJuy 2026',
+  name: 'ExpoJuy 2026',
+  tagline: 'Conectando países, creando oportunidades',
+  edition: '17ª edición',
+  dates: 'Del 9 al 12 de octubre de 2026',
+  place: 'Ciudad Cultural · San Salvador de Jujuy, Argentina',
+  organizer: 'Cámara de Comercio Exterior de Jujuy',
+  social: [
+    { name: 'Instagram', url: 'https://www.instagram.com/expojuy', label: '@expojuy' },
+    { name: 'Facebook', url: 'https://www.facebook.com/expojuy', label: '/expojuy' },
+    { name: 'X / Twitter', url: 'https://x.com/expojuy', label: '@expojuy' },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/company/expojuy', label: '/company/expojuy' },
+    { name: 'YouTube', url: 'https://www.youtube.com/@expojuy', label: 'ExpoJuy' },
+  ],
+  email: 'info@camcomexjujuy.com.ar',
+  navigation: [
+    { label: 'Inicio', href: '/' },
+    { label: 'Sobre ExpoJuy', href: '/sobre-expojuy/' },
+    { label: 'Expositores', href: '/expositores/' },
+    { label: 'Agenda', href: '/agenda/' },
+    { label: 'Noticias', href: '/noticias/' },
+    { label: 'Mapa', href: '/mapa/' },
+    { label: 'Sponsors', href: '/sponsors/' },
+    { label: 'Contacto', href: '/contacto/' },
+    { label: 'Preguntas frecuentes', href: '/preguntas-frecuentes/' },
+  ],
+};

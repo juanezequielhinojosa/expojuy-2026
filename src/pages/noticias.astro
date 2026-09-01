@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import NewsCard from '../components/NewsCard.astro';
+import { news } from '../data/news';
+---
+
+<Layout
+  title="Noticias"
+  description="Novedades y anuncios oficiales de ExpoJuy 2026."
+>
+  <section class="section">
+    <div class="container">
+      <SectionTitle
+        kicker="Novedades"
+        title="Noticias de ExpoJuy 2026"
+        lede="Anuncios de la organización, novedades de la feria y actividades destacadas."
+      />
+      <div class="grid grid-2">
+        {news.map((item) => <NewsCard item={item} />)}
+      </div>
+    </div>
+  </section>
+</Layout>

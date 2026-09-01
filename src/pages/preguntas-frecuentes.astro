@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import { faqs } from '../data/faqs';
+---
+
+<Layout
+  title="Preguntas frecuentes"
+  description="Respuestas a las dudas más comunes sobre ExpoJuy 2026."
+>
+  <section class="section">
+    <div class="container narrow">
+      <SectionTitle
+        kicker="Ayuda"
+        title="Preguntas frecuentes"
+        lede="Recopilamos las consultas más habituales sobre la feria, las entradas, los expositores y el predio."
+      />
+
+      <div class="faq-list">
+        {faqs.map((f, i) => (
+          <details class="faq-item" open={i === 0}>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+
+      <p class="more-help">
+        ¿Quedó alguna duda? <a href="/contacto/">Escribinos</a> y te
+        respondemos.
+      </p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .narrow {
+    max-width: 760px;
+  }
+
+  .more-help {
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+</style>

@@ -1,0 +1,99 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+---
+
+<Layout
+  title="Sobre ExpoJuy 2026"
+  description="Conocé ExpoJuy, la muestra multisectorial del norte argentino organizada por la Cámara de Comercio Exterior de Jujuy."
+>
+  <section class="section">
+    <div class="container narrow">
+      <SectionTitle
+        kicker="Sobre ExpoJuy 2026"
+        title="Conectando países, creando oportunidades"
+        lede="ExpoJuy es el encuentro productivo, comercial, institucional e internacional más importante del norte argentino."
+      />
+
+      <p>
+        Organizada por la <strong>Cámara de Comercio Exterior de Jujuy</strong>{' '}
+        y con el acompañamiento del Gobierno de la Provincia, ExpoJuy reúne a
+        empresas, pymes, emprendedores, instituciones, productores y artistas
+        de Jujuy y de la región. En cada edición se convierte en la vidriera de
+        la producción, el turismo y la cultura de la provincia.
+      </p>
+
+      <p>
+        La edición 2026 llega con un <strong>formato renovado de cuatro
+        días</strong> (del 9 al 12 de octubre), con actividades por la mañana y
+        por la tarde: rondas de negocios, foros sectoriales, exposiciones y una
+        agenda cultural intensa.
+      </p>
+
+      <h3>Nuestros ejes</h3>
+      <ul class="plain-list">
+        <li>
+          <strong>Corredor Bioceánico de Capricornio:</strong> la feria se
+          proyecta como plataforma de integración con Chile, Paraguay, Brasil y
+          Bolivia, conectando la oferta local con la demanda internacional.
+        </li>
+        <li>
+          <strong>Minería sustentable:</strong> la cadena de valor minera es uno
+          de los ejes centrales de la edición 2026, con énfasis en la Puna y el
+          litio.
+        </li>
+        <li>
+          <strong>Economía del Conocimiento:</strong> tecnología, innovación y
+          talento jujeño, con iniciativas como el Desafío Digital ExpoJuy 2026.
+        </li>
+        <li>
+          <strong>Interior provincial:</strong> potenciar la participación de
+          productores y emprendedores de todas las localidades de Jujuy.
+        </li>
+      </ul>
+
+      <h3>Datos útiles</h3>
+      <ul class="plain-list">
+        <li><strong>Lugar:</strong> Ciudad Cultural, San Salvador de Jujuy, Argentina.</li>
+        <li><strong>Fechas:</strong> del 9 al 12 de octubre de 2026.</li>
+        <li><strong>Accesos:</strong> con entrada general; consultá la sección entradas para novedades.</li>
+      </ul>
+
+      <div class="note">
+        <p>
+          Este sitio es una <strong>propuesta conceptual</strong> presentada en
+          el marco del Desafío Digital ExpoJuy 2026. El contenido institucional
+          se basa en información pública del evento.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .narrow {
+    max-width: 760px;
+  }
+
+  .plain-list {
+    padding-left: 1.2rem;
+    margin: 0 0 1.5rem;
+  }
+
+  .plain-list li {
+    margin-bottom: 0.6rem;
+  }
+
+  .note {
+    margin-top: 2rem;
+    padding: 1rem 1.25rem;
+    border: 1px dashed var(--accent-gold);
+    border-radius: var(--radius);
+    background: rgba(232, 163, 61, 0.08);
+    font-size: 0.9rem;
+  }
+
+  .note p {
+    margin: 0;
+  }
+</style>

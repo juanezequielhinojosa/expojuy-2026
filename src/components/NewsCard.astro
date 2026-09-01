@@ -1,0 +1,57 @@
+---
+import type { NewsItem } from '../data/news';
+
+interface Props {
+  item: NewsItem;
+}
+
+const { item } = Astro.props;
+
+const pretty = new Intl.DateTimeFormat('es-AR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(new Date(item.date + 'T12:00:00'));
+---
+
+<article class="news-card">
+  <time class="news-date" datetime={item.date}>{pretty}</time>
+  <h3>{item.title}</h3>
+  <p>{item.excerpt}</p>
+  <a href="#novedades" aria-hidden="true" tabindex="-1">Leer más →</a>
+</article>
+
+<style>
+  .news-card {
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    box-shadow: var(--shadow);
+  }
+
+  .news-date {
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-terracotta);
+  }
+
+  .news-card h3 {
+    font-size: 1.15rem;
+    margin: 0;
+  }
+
+  .news-card p {
+    margin: 0;
+    flex: 1;
+  }
+
+  .news-card a {
+    width: fit-content;
+  }
+</style>

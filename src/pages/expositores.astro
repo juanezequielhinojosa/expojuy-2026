@@ -1,0 +1,132 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ExhibitCard from '../components/ExhibitorCard.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import { exhibitors, rubros } from '../data/exhibitors';
+---
+
+<Layout
+  title="Expositores"
+  description="Explorá los expositores de ExpoJuy 2026 por rubro: minería, agroindustria, turismo, tecnología y más."
+>
+  <section class="section">
+    <div class="container">
+      <SectionTitle
+        kicker="Expositores"
+        title="Quiénes participan"
+        lede="Buscá por nombre o filtrá por rubro. La nómina final se publica según el programa oficial."
+      />
+
+      <div class="filter-bar" role="search">
+        <label class="visually-hidden" for="q">Buscar expositor</label>
+        <input
+          id="q"
+          class="search"
+          type="search"
+          placeholder="Buscar expositor…"
+          data-filter-search
+        />
+        <label class="visually-hidden" for="rubro">Filtrar por rubro</label>
+        <select id="rubro" data-filter-rubro>
+          <option value="">Todos los rubros</option>
+          {rubros.map((r) => <option value={r}>{r}</option>)}
+        </select>
+      </div>
+
+      <p class="counter" data-filter-count aria-live="polite"></p>
+
+      <div class="grid grid-2" data-exhibitor-list>
+        {
+          exhibitors.map((e) => (
+            <div class="ex-wrapper" data-exhibitor data-name={e.name} data-rubro={e.rubro}>
+              <ExhibitCard exhibitor={e} />
+            </div>
+          ))
+        }
+      </div>
+
+      <p class="empty" data-filter-empty hidden>
+        No se encontraron expositores con esos criterios.
+      </p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .filter-bar {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+  }
+
+  .search {
+    flex: 1 1 280px;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    font: inherit;
+    background: var(--bg-alt);
+  }
+
+  .filter-bar select {
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    font: inherit;
+    background: var(--bg-alt);
+  }
+
+  .counter {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin: 0 0 1.2rem;
+  }
+
+  .empty {
+    padding: 2rem;
+    text-align: center;
+    color: var(--muted);
+    border: 1px dashed var(--line);
+    border-radius: var(--radius);
+  }
+</style>
+
+<script>
+  const list = document.querySelector('[data-exhibitor-list]');
+  const search = document.querySelector('[data-filter-search]');
+  const rubroEl = document.querySelector('[data-filter-rubro]');
+  const count = document.querySelector('[data-filter-count]');
+  const empty = document.querySelector('[data-filter-empty]');
+
+  if (list && search && rubroEl) {
+    const items = Array.from(list.querySelectorAll('[data-exhibitor]'));
+
+    const apply = () => {
+      const q = (search.value || '').trim().toLowerCase();
+      const rubro = rubroEl.value;
+      let visible = 0;
+
+      for (const item of items) {
+        const matchesName = !q || (item.dataset.name || '').toLowerCase().includes(q);
+        const matchesRubro = !rubro || item.dataset.rubro === rubro;
+        item.hidden = !(matchesName && matchesRubro);
+        if (!item.hidden) visible += 1;
+      }
+
+      if (count) count.textContent = `${visible} de ${items.length} expositores`;
+      if (empty) empty.hidden = visible !== 0;
+    };
+
+    search.addEventListener('input', apply);
+    rubroEl.addEventListener('change', apply);
+
+    const params = new URLSearchParams(location.search);
+    const initialRubro = params.get('rubro');
+    if (initialRubro) {
+      const opt = Array.from(rubroEl.options).find((o) => o.value === initialRubro);
+      if (opt) rubroEl.value = initialRubro;
+    }
+    apply();
+  }
+</script>

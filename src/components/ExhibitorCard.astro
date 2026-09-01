@@ -1,0 +1,80 @@
+---
+import type { Exhibitor } from '../data/exhibitors';
+
+interface Props {
+  exhibitor: Exhibitor;
+  index?: number;
+}
+
+const { exhibitor, index } = Astro.props;
+const initial = exhibitor.name.charAt(0);
+---
+
+<article class="ex-card">
+  <div class="ex-avatar" aria-hidden="true">{initial}</div>
+  <div class="ex-body">
+    <h3 class="ex-name">{exhibitor.name}</h3>
+    <p class="ex-org">
+      <span class="chip">{exhibitor.rubro}</span>
+      <span class="ex-origin">{exhibitor.origin}</span>
+    </p>
+    <p class="ex-desc">{exhibitor.description}</p>
+  </div>
+</article>
+
+<style>
+  .ex-card {
+    display: flex;
+    gap: 1rem;
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .ex-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+  }
+
+  .ex-avatar {
+    flex: 0 0 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #fff;
+    background: linear-gradient(135deg, var(--brand-700), var(--brand-900));
+  }
+
+  .ex-body {
+    min-width: 0;
+  }
+
+  .ex-name {
+    font-size: 1.05rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .ex-org {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+  }
+
+  .ex-origin {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .ex-desc {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+</style>

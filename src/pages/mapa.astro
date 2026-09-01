@@ -1,0 +1,98 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+---
+
+<Layout
+  title="Mapa"
+  description="Cómo llegar y plano del predio de ExpoJuy 2026 en la Ciudad Cultural de San Salvador de Jujuy."
+>
+  <section class="section">
+    <div class="container">
+      <SectionTitle
+        kicker="Mapa y accesos"
+        title="Cómo llegar al predio"
+        lede="ExpoJuy 2026 se realiza en la Ciudad Cultural, a pocos minutos del centro de San Salvador de Jujuy."
+      />
+
+      <div class="map-grid">
+        <div class="map-embed">
+          <iframe
+            title="Mapa de la Ciudad Cultural, San Salvador de Jujuy"
+            src="https://maps.google.com/maps?q=Ciudad%20Cultural%2C%20San%20Salvador%20de%20Jujuy&z=15&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+
+        <aside class="map-info">
+          <h3>Accesos y recomendaciones</h3>
+          <ul class="plain-list">
+            <li><strong>Dirección:</strong> Predio ferial de la Ciudad Cultural, San Salvador de Jujuy.</li>
+            <li><strong>Centro:</strong> a pocos minutos del centro de la ciudad capital.</li>
+            <li><strong>Transporte:</strong> líneas de colectivo urbano con paradas en el predio y estacionamiento para autos.</li>
+            <li><strong>Accesibilidad:</strong> rampas y recorridos accesibles en todo el predio.</li>
+          </ul>
+
+          <div class="plano-note">
+            <span class="chip">Plano interactivo</span>
+            <p>
+              El plano del predio con los stands se publicará en la versión
+              final del sitio, vinculado al buscador de expositores.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .map-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .map-embed iframe {
+    width: 100%;
+    height: 420px;
+    border: 0;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    filter: saturate(0.9);
+  }
+
+  .map-info {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+  }
+
+  .plain-list {
+    padding-left: 1.2rem;
+    margin: 0;
+  }
+
+  .plain-list li {
+    margin-bottom: 0.6rem;
+  }
+
+  .plano-note {
+    border: 1px dashed var(--accent-gold);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    background: rgba(232, 163, 61, 0.08);
+  }
+
+  .plano-note p {
+    margin: 0.6rem 0 0;
+  }
+
+  @media (max-width: 820px) {
+    .map-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Memoria descriptiva · Prototipo web ExpoJuy 2026</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.5;
+    color: #1c2733;
+    margin: 0;
+  }
+  h1 { font-size: 20pt; margin: 0 0 4px; color: #044463; }
+  h2 {
+    font-size: 13.5pt;
+    color: #044463;
+    border-bottom: 2px solid #e8a33d;
+    padding-bottom: 4px;
+    margin: 22px 0 10px;
+  }
+  h3 { font-size: 11.5pt; margin: 16px 0 6px; color: #a5632f; }
+  p { margin: 0 0 8px; }
+  ul { margin: 0 0 10px; padding-left: 20px; }
+  li { margin-bottom: 3px; }
+  .cover {
+    border: 3px solid #044463;
+    border-radius: 8px;
+    padding: 22px 26px;
+    margin-bottom: 18px;
+    background: #f4f8fb;
+  }
+  .cover .sub { font-size: 12pt; color: #a5632f; font-weight: bold; }
+  .meta { font-size: 9.5pt; color: #55636f; margin-top: 10px; }
+  .tag {
+    display: inline-block;
+    background: #e8a33d22;
+    border: 1px solid #e8a33d;
+    color: #7a4a1c;
+    border-radius: 4px;
+    padding: 1px 8px;
+    font-size: 9pt;
+    font-weight: 600;
+    margin-right: 6px;
+  }
+  table { border-collapse: collapse; width: 100%; margin: 8px 0 12px; font-size: 10pt; }
+  th, td { border: 1px solid #c8d3dc; padding: 5px 8px; text-align: left; vertical-align: top; }
+  th { background: #044463; color: #fff; }
+  tr:nth-child(even) td { background: #f4f8fb; }
+  .footer-note { margin-top: 24px; font-size: 8.5pt; color: #77828c; border-top: 1px solid #c8d3dc; padding-top: 8px; }
+</style>
+</head>
+<body>
+
+  <div class="cover">
+    <h1>Memoria descriptiva</h1>
+    <div class="sub">Propuesta de identidad web · ExpoJuy 2026</div>
+    <p style="margin-top:10px;">
+      Desafío Digital ExpoJuy 2026 — Primera etapa.<br />
+      Prototipo funcional navegable desarrollado con Astro.
+    </p>
+    <div class="meta">
+      Organizador de referencia: Cámara de Comercio Exterior de Jujuy.<br />
+      Fecha de presentación: septiembre de 2026.
+    </div>
+  </div>
+
+  <h2>1. Presentación</h2>
+  <p>
+    Este documento acompaña el <strong>prototipo funcional navegable</strong> del
+    sitio web propuesto para ExpoJuy 2026, presentado en la primera etapa del
+    Desafío Digital. El prototipo fue desarrollado como un sitio real, estático y
+    navegable en <strong>Astro</strong>, publicado en un repositorio de GitHub, de modo
+    que pueda recorrerse en el navegador exactamente en la forma en que operaría
+    la edición final.
+  </p>
+  <p>
+    El contenido incluido (expositores, agenda, noticias y sponsors) es <strong>de
+    ejemplo</strong> y se reemplaza por la información oficial del kit y de la
+    organización cuando esté disponible.
+  </p>
+
+  <h2>2. Consignas que se abordan</h2>
+  <ul>
+    <li>Propuesta de <strong>identidad web</strong> y diseño visual para ExpoJuy.</li>
+    <li>
+      Las <strong>secciones mínimas</strong> requeridas: Inicio, Sobre ExpoJuy,
+      Expositores, Agenda, Noticias, Plano/Mapa, Sponsors, Contacto, FAQ y Redes sociales.
+    </li>
+    <li>Diseño <strong>responsivo</strong> (móvil, tablet y escritorio).</li>
+    <li>Stack libre: se eligió <strong>Astro + TypeScript</strong> (estático, rápido y de bajo costo).</li>
+    <li>Entrega como <strong>prototipo funcional navegable en GitHub + memoria en PDF</strong>.</li>
+  </ul>
+
+  <h2>3. Identidad visual propuesta</h2>
+  <p>
+    Al no contar aún con el kit de diseño oficial, la propuesta utiliza una
+    identidad provisoria construida sobre la región y el evento, fácil de
+    reemplazar por los assets oficiales cuando sean entregados.
+  </p>
+  <table>
+    <tr><th>Elemento</th><th>Propuesta</th></tr>
+    <tr><td>Colores</td><td>Azul profundo #044463 (base), ámbar #e8a33d (destacados), terracota #c0572d (énfasis), neutros claros para fondos.</td></tr>
+    <tr><td>Tipografías</td><td>Poppins (títulos) e Inter (texto), desde Google Fonts.</td></tr>
+    <tr><td>Lema</td><td>“Conectando países, creando oportunidades”.</td></tr>
+    <tr><td>Estilo</td><td>Tarjetas, pestañas por día, acordeones, botones con jerarquía y componentes accesibles.</td></tr>
+  </table>
+
+  <h2>4. Mapa del sitio</h2>
+  <table>
+    <tr><th>Sección</th><th>Contenido del prototipo</th></tr>
+    <tr><td>Inicio (/)</td><td>Hero con datos del evento, estadísticas, sectores, agenda destacada, noticias y convocatoria.</td></tr>
+    <tr><td>Sobre ExpoJuy</td><td>Historia, ejes temáticos (Corredor Bioceánico, minería, economía del conocimiento, interior) y datos útiles.</td></tr>
+    <tr><td>Expositores</td><td>Buscador y filtro por rubro (8 rubros), 12 expositores de ejemplo, enlace por rubro desde el inicio.</td></tr>
+    <tr><td>Agenda</td><td>Pestañas por día (9 al 12 de octubre) con 16 actividades de ejemplo organizadas en tabla.</td></tr>
+    <tr><td>Noticias</td><td>Tarjetas con 4 novedades de ejemplo.</td></tr>
+    <tr><td>Mapa</td><td>Mapa embebido del predio (Ciudad Cultural) y accesos; el plano interactivo de stands se incorpora en la versión final.</td></tr>
+    <tr><td>Sponsors</td><td>Bloque institucional y comercial con 10 partners de ejemplo y convocatoria.</td></tr>
+    <tr><td>Contacto</td><td>Formulario de consulta (validación en cliente) y datos de contacto.</td></tr>
+    <tr><td>Preguntas frecuentes</td><td>Acordeón accesible con 7 preguntas de ejemplo.</td></tr>
+    <tr><td>Redes sociales</td><td>Enlaces en header y footer (Instagram, Facebook, X, LinkedIn y YouTube).</td></tr>
+  </table>
+
+  <h2>5. Arquitectura técnica</h2>
+  <ul>
+    <li><strong>Framework:</strong> Astro 7 (salida estática) con TypeScript estricto.</li>
+    <li><strong>Fuente de datos:</strong> módulos tipados en <code>src/data/</code> (site, exhibitors, agenda, news, sponsors, faqs) que permiten actualizar contenido sin tocar las páginas.</li>
+    <li><strong>Componentes:</strong> Header (menú responsive), Footer, Hero, SectionTitle, tarjetas de expositor y noticia.</li>
+    <li><strong>Interactividad mínima:</strong> filtro/buscador de expositores, pestañas de agenda, acordeón FAQ y formulario de contacto (vanilla JS, sin dependencias).</li>
+    <li><strong>SEO:</strong> layout base con <code>&lt;title&gt;</code>, meta description y Open Graph por página.</li>
+    <li><strong>Publicación:</strong> repositorio Git en GitHub; es desplegable en cualquier hosting estático (GitHub Pages, Netlify, Vercel).</li>
+  </ul>
+
+  <h2>6. Cómo se recorre el prototipo</h2>
+  <ol>
+    <li>Clonar el repositorio y ejecutar <code>npm install</code>.</li>
+    <li>Desarrollo local: <code>npm run dev</code>.</li>
+    <li>Previsualización de la versión de producción: <code>npm run build</code> y <code>npm run preview</code>.</li>
+  </ol>
+
+  <h2>7. Próximos pasos</h2>
+  <ul>
+    <li>Aplicar el <strong>kit de diseño oficial</strong> (paleta, tipografías, imaginería y logotipos) cuando esté disponible.</li>
+    <li>Cargar la <strong>nómina real de expositores, sponsors y agenda</strong>.</li>
+    <li>Incorporar el <strong>plano interactivo</strong> del predio vinculado a los stands.</li>
+    <li>Conectar el formulario y los enlaces de entradas a los sistemas oficiales.</li>
+    <li>Extensiones de la 2ª etapa: sistema de inscripción para expositores, perfil de empresa, panel de noticias y administración de contenido.</li>
+  </ul>
+
+  <div class="footer-note">
+    Prototipo conceptual presentado en el marco del Desafío Digital ExpoJuy 2026.
+    Sitio no oficial; el contenido institucional se basa en información pública y en los documentos del desafío.
+  </div>
+
+</body>
+</html>
