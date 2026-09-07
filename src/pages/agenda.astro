@@ -1,4 +1,5 @@
 ---
+// Página: Agenda diaria con pestañas por día
 import Layout from '../layouts/Layout.astro';
 import SectionTitle from '../components/SectionTitle.astro';
 import Icon from '../components/Icon.astro';
@@ -18,6 +19,15 @@ const typeIcons: Record<string, string> = {
   Cultural: 'heart',
   Foros: 'users',
   Feria: 'cart',
+};
+
+const TYPE_COLORS: Record<string, { from: string; to: string }> = {
+  Institucional: { from: '#4E3AA8', to: '#25C0D4' },
+  Negocios:      { from: '#25C0D4', to: '#6143C9' },
+  Charlas:       { from: '#774FF0', to: '#25C0D4' },
+  Cultural:      { from: '#A18BFF', to: '#25C0D4' },
+  Foros:         { from: '#25C0D4', to: '#820CD0' },
+  Feria:         { from: '#25C0D4', to: '#BB8CFF' },
 };
 ---
 
@@ -77,8 +87,13 @@ const typeIcons: Record<string, string> = {
                       <td>{a.time}</td>
                       <td>{a.title}</td>
                       <td>
-                        <span class="chip type-chip">
-                          <Icon name={typeIcons[a.type] ?? 'info'} size={14} />
+                        <span
+                          class="chip type-chip"
+                          style={`--from:${TYPE_COLORS[a.type]?.from ?? '#4E3AA8'};--to:${TYPE_COLORS[a.type]?.to ?? '#25C0D4'}`}
+                        >
+                          <span class="type-ico" aria-hidden="true">
+                            <Icon name={typeIcons[a.type] ?? 'info'} size={13} />
+                          </span>
                           {a.type}
                         </span>
                       </td>
@@ -106,13 +121,50 @@ const typeIcons: Record<string, string> = {
     gap: 0.45rem;
   }
 
+  .tab-btn svg {
+    color: var(--turquesa);
+  }
+
+  .tab-btn[aria-selected='true'] {
+    background: linear-gradient(135deg, var(--turquesa), var(--brand-500));
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 10px 24px -10px rgba(37, 192, 212, 0.55);
+  }
+
+  .tab-btn[aria-selected='true'] svg {
+    color: #fff;
+  }
+
   .type-chip {
     white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.25rem 0.85rem 0.25rem 0.3rem;
+    border: 1px solid color-mix(in srgb, var(--turquesa) 45%, transparent);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--turquesa);
+    background: color-mix(in srgb, var(--turquesa) 10%, transparent);
+  }
+
+  .type-ico {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 7px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--from), var(--to));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 4px 10px -4px rgba(43, 27, 94, 0.5);
   }
 
   .agenda-table td:first-child {
     font-weight: 600;
-    color: var(--brand-800);
+    color: var(--ink);
     white-space: nowrap;
   }
 </style>

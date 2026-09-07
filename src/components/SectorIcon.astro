@@ -1,29 +1,31 @@
 ---
+// Componente: Ícono de sector con gradiente propio
 import Icon from './Icon.astro';
 
 interface Props {
   rubro: string;
   size?: 'sm' | 'md' | 'lg';
+  plain?: boolean;
 }
 
-const { rubro, size = 'md' } = Astro.props;
+const { rubro, size = 'md', plain = false } = Astro.props;
 
 const SECTORS: Record<string, { icon: string; from: string; to: string }> = {
-  Minería: { icon: 'gem', from: '#0a74a5', to: '#032f47' },
-  Agroindustria: { icon: 'leaf', from: '#57a44a', to: '#2f6b2c' },
-  Turismo: { icon: 'mountain', from: '#e8a33d', to: '#8a5a13' },
-  Industria: { icon: 'cog', from: '#6b7a86', to: '#2b3540' },
-  Tecnología: { icon: 'cpu', from: '#8a63d2', to: '#4a2a8a' },
-  Comercio: { icon: 'cart', from: '#d4703f', to: '#7c321d' },
-  Servicios: { icon: 'briefcase', from: '#2f9dbb', to: '#0d4d5f' },
-  Artesanías: { icon: 'vase', from: '#c98a5b', to: '#6f4426' },
+  Minería: { icon: 'gem', from: '#25C0D4', to: '#6143C9' },
+  Agroindustria: { icon: 'leaf', from: '#774FF0', to: '#25C0D4' },
+  Turismo: { icon: 'mountain', from: '#A18BFF', to: '#25C0D4' },
+  Industria: { icon: 'cog', from: '#5A3FC0', to: '#25C0D4' },
+  Tecnología: { icon: 'cpu', from: '#25C0D4', to: '#820CD0' },
+  Comercio: { icon: 'cart', from: '#4E3AA8', to: '#25C0D4' },
+  Servicios: { icon: 'briefcase', from: '#25C0D4', to: '#774FF0' },
+  Artesanías: { icon: 'vase', from: '#25C0D4', to: '#BB8CFF' },
 };
 
-const s = SECTORS[rubro] ?? { icon: 'building', from: '#0a74a5', to: '#032f47' };
+const s = SECTORS[rubro] ?? { icon: 'building', from: '#6143C9', to: '#2B1B5E' };
 ---
 
 <span
-  class:list={['sector-icon', `sector-icon-${size}`]}
+  class:list={['sector-icon', `sector-icon-${size}`, { 'sector-icon-plain': plain }]}
   style={`--g1:${s.from};--g2:${s.to}`}
   aria-hidden="true"
 >
@@ -38,7 +40,7 @@ const s = SECTORS[rubro] ?? { icon: 'building', from: '#0a74a5', to: '#032f47' }
     border-radius: 14px;
     color: #fff;
     background: linear-gradient(135deg, var(--g1), var(--g2));
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 6px 16px -6px rgba(3, 47, 71, 0.55);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 6px 16px -6px rgba(43, 27, 94, 0.55);
   }
 
   .sector-icon-sm {
@@ -56,5 +58,12 @@ const s = SECTORS[rubro] ?? { icon: 'building', from: '#0a74a5', to: '#032f47' }
     width: 78px;
     height: 78px;
     border-radius: 20px;
+  }
+
+  .sector-icon-plain {
+    background: none !important;
+    box-shadow: none;
+    border-radius: 0;
+    color: #fff;
   }
 </style>

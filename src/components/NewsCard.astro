@@ -1,4 +1,5 @@
 ---
+// Componente: Tarjeta de noticia
 import type { NewsItem } from '../data/news';
 import Icon from './Icon.astro';
 
@@ -15,23 +16,22 @@ const pretty = new Intl.DateTimeFormat('es-AR', {
   year: 'numeric',
 }).format(new Date(item.date + 'T12:00:00'));
 
-const COVERS: { icon: string; from: string; to: string }[] = [
-  { icon: 'globe', from: '#065a82', to: '#032f47' },
-  { icon: 'zap', from: '#8a63d2', to: '#3d1f7a' },
-  { icon: 'sparkles', from: '#c98220', to: '#7c4a0e' },
-  { icon: 'building', from: '#2f9dbb', to: '#0d4d5f' },
-  { icon: 'truck', from: '#d4703f', to: '#7c321d' },
-  { icon: 'users', from: '#57a44a', to: '#2f6b2c' },
+const base = import.meta.env.BASE_URL;
+
+const PHOTOS = [
+  base + 'img/hero/hero-slide-1.jpg',
+  base + 'img/hero/hero-slide-2.jpg',
+  base + 'img/hero/hero-slide-3.jpg',
+  base + 'img/hero/hero-slide-4.jpg',
+  base + 'img/hero/hero-slide-5.jpg',
 ];
 
-const cover = COVERS[index % COVERS.length];
+const photo = PHOTOS[index % PHOTOS.length];
 ---
 
 <article class="news-card">
-  <div class="news-cover" style={`--g1:${cover.from};--g2:${cover.to}`}>
-    <span class="news-ico" aria-hidden="true">
-      <Icon name={cover.icon} size={30} strokeWidth={1.7} />
-    </span>
+  <div class="news-cover">
+    <img src={photo} alt="" loading="lazy" />
     <time class="news-date" datetime={item.date}>
       {pretty}
     </time>
@@ -58,55 +58,58 @@ const cover = COVERS[index % COVERS.length];
   }
 
   .news-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px -18px rgba(3, 47, 71, 0.28);
+    transform: translateY(-5px);
+    box-shadow:
+      0 22px 42px -18px rgba(43, 27, 94, 0.32),
+      -18px 22px 46px -16px rgba(37, 192, 212, 0.6),
+      18px -22px 46px -16px rgba(119, 79, 240, 0.7);
   }
 
   .news-cover {
     position: relative;
-    min-height: 120px;
+    min-height: 150px;
     display: grid;
     place-items: center;
-    background:
-      radial-gradient(220px 120px at 85% -20%, rgba(255, 255, 255, 0.22), transparent 60%),
-      linear-gradient(135deg, var(--g1), var(--g2));
     overflow: hidden;
+    border-bottom: 3px solid var(--turquesa);
+  }
+
+  .news-cover img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .news-cover::after {
     content: '';
     position: absolute;
-    inset: auto -30% -55% -12%;
-    height: 70%;
-    background: rgba(255, 255, 255, 0.07);
-    transform: skewY(-4deg);
-  }
-
-  .news-ico {
-    display: grid;
-    place-items: center;
-    width: 66px;
-    height: 66px;
-    border-radius: 18px;
-    color: #fff;
-    background: rgba(255, 255, 255, 0.14);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 14px 30px -10px rgba(0, 0, 0, 0.4);
+    inset: 0;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(37, 16, 54, 0.06) 0%,
+        rgba(37, 16, 54, 0.28) 100%
+      );
   }
 
   .news-date {
     position: absolute;
-    left: 0.9rem;
-    bottom: 0.7rem;
-    font-size: 0.72rem;
+    z-index: 1;
+    left: 0.4rem;
+    bottom: 0.6rem;
+    display: inline-block;
+    padding: 0.34rem 0.68rem;
+    font-size: 0.64rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: rgba(255, 255, 255, 0.92);
-    background: rgba(0, 0, 0, 0.28);
-    padding: 0.3rem 0.7rem;
+    letter-spacing: 0.07em;
+    color: #fff;
+    background: linear-gradient(135deg, var(--turquesa), var(--brand-500));
     border-radius: 999px;
-    backdrop-filter: blur(4px);
+    box-shadow: 0 10px 22px -8px rgba(37, 192, 212, 0.45);
+    filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.4));
   }
 
   .news-body {
@@ -132,5 +135,6 @@ const cover = COVERS[index % COVERS.length];
     align-items: center;
     gap: 0.3rem;
     font-weight: 600;
+    color: var(--brand-500);
   }
 </style>

@@ -1,3 +1,4 @@
+// Expositores y rubros de la muestra
 export type Rubro =
   | 'Minería'
   | 'Agroindustria'

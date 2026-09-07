@@ -1,3 +1,6 @@
+// Datos globales del sitio: marca, fechas, lugar y contacto
+const base = import.meta.env.BASE_URL;
+
 export const site = {
   title: 'ExpoJuy 2026',
   name: 'ExpoJuy 2026',
@@ -10,19 +13,18 @@ export const site = {
     { name: 'Instagram', url: 'https://www.instagram.com/expojuy', label: '@expojuy' },
     { name: 'Facebook', url: 'https://www.facebook.com/expojuy', label: '/expojuy' },
     { name: 'X / Twitter', url: 'https://x.com/expojuy', label: '@expojuy' },
-    { name: 'LinkedIn', url: 'https://www.linkedin.com/company/expojuy', label: '/company/expojuy' },
     { name: 'YouTube', url: 'https://www.youtube.com/@expojuy', label: 'ExpoJuy' },
   ],
   email: 'info@camcomexjujuy.com.ar',
   navigation: [
-    { label: 'Inicio', href: '/' },
-    { label: 'Sobre ExpoJuy', href: '/sobre-expojuy/' },
-    { label: 'Expositores', href: '/expositores/' },
-    { label: 'Agenda', href: '/agenda/' },
-    { label: 'Noticias', href: '/noticias/' },
-    { label: 'Mapa', href: '/mapa/' },
-    { label: 'Sponsors', href: '/sponsors/' },
-    { label: 'Contacto', href: '/contacto/' },
-    { label: 'Preguntas frecuentes', href: '/preguntas-frecuentes/' },
+    { label: 'Inicio', href: base },
+    { label: 'Sobre ExpoJuy', href: `${base}sobre-expojuy/` },
+    { label: 'Expositores', href: `${base}expositores/` },
+    { label: 'Agenda', href: `${base}agenda/` },
+    { label: 'Noticias', href: `${base}noticias/` },
+    { label: 'Mapa', href: `${base}mapa/` },
+    { label: 'Sponsors', href: `${base}sponsors/` },
+    { label: 'Contacto', href: `${base}contacto/` },
+    { label: 'Preguntas frecuentes', href: `${base}preguntas-frecuentes/` },
   ],
 };

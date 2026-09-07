@@ -1,7 +1,10 @@
 ---
+// Página: Sobre ExpoJuy (organización, ejes y datos)
 import Layout from '../layouts/Layout.astro';
 import SectionTitle from '../components/SectionTitle.astro';
 import Icon from '../components/Icon.astro';
+
+const base = import.meta.env.BASE_URL;
 
 const ejes = [
   {
@@ -39,13 +42,26 @@ const ejes = [
         lede="ExpoJuy es el encuentro productivo, comercial, institucional e internacional más importante del norte argentino."
       />
 
-      <p>
-        Organizada por la <strong>Cámara de Comercio Exterior de Jujuy</strong>{' '}
-        y con el acompañamiento del Gobierno de la Provincia, ExpoJuy reúne a
-        empresas, pymes, emprendedores, instituciones, productores y artistas
-        de Jujuy y de la región. En cada edición se convierte en la vidriera de
-        la producción, el turismo y la cultura de la provincia.
-      </p>
+      <div class="intro">
+        <div class="intro-panel">
+          <span class="intro-logo-wrap">
+            <img
+              class="intro-logo"
+              src={base + 'logos/logo-camara.png'}
+              alt="Cámara de Comercio Exterior de Jujuy"
+              width="140"
+              height="114"
+            />
+          </span>
+          <p>
+            Organizada por la <strong>Cámara de Comercio Exterior de Jujuy</strong>{' '}
+            y con el acompañamiento del Gobierno de la Provincia, ExpoJuy reúne a
+            empresas, pymes, emprendedores, instituciones, productores y artistas
+            de Jujuy y de la región. En cada edición se convierte en la vidriera de
+            la producción, el turismo y la cultura de la provincia.
+          </p>
+        </div>
+      </div>
 
       <p>
         La edición 2026 llega con un <strong>formato renovado de cuatro
@@ -59,7 +75,7 @@ const ejes = [
         {
           ejes.map((e) => (
             <div class="eje">
-              <span class="icon-circle">
+              <span class="eje-ico">
                 <Icon name={e.icon} size={22} strokeWidth={1.8} />
               </span>
               <div>
@@ -71,27 +87,34 @@ const ejes = [
       </div>
 
       <h3>Datos útiles</h3>
-      <ul class="plain-list">
-        <li>
-          <Icon name="mappin" size={16} />
-          <span><strong>Lugar:</strong> Ciudad Cultural, San Salvador de Jujuy, Argentina.</span>
-        </li>
-        <li>
-          <Icon name="calendar" size={16} />
-          <span><strong>Fechas:</strong> del 9 al 12 de octubre de 2026.</span>
-        </li>
-        <li>
-          <Icon name="ticket" size={16} />
-          <span><strong>Accesos:</strong> con entrada general; consultá la sección entradas para novedades.</span>
-        </li>
-      </ul>
-
-      <div class="note">
-        <p>
-          Este sitio es una <strong>propuesta conceptual</strong> presentada en
-          el marco del Desafío Digital ExpoJuy 2026. El contenido institucional
-          se basa en información pública del evento.
-        </p>
+      <div class="datos-grid">
+        <div class="dato">
+          <span class="dato-ico" aria-hidden="true">
+            <Icon name="mappin" size={20} strokeWidth={1.8} />
+          </span>
+          <div class="dato-body">
+            <strong>Lugar</strong>
+            <span>Ciudad Cultural, San Salvador de Jujuy, Argentina.</span>
+          </div>
+        </div>
+        <div class="dato">
+          <span class="dato-ico" aria-hidden="true">
+            <Icon name="calendar" size={20} strokeWidth={1.8} />
+          </span>
+          <div class="dato-body">
+            <strong>Fechas</strong>
+            <span>Del 9 al 12 de octubre de 2026.</span>
+          </div>
+        </div>
+        <div class="dato">
+          <span class="dato-ico" aria-hidden="true">
+            <Icon name="ticket" size={20} strokeWidth={1.8} />
+          </span>
+          <div class="dato-body">
+            <strong>Accesos</strong>
+            <span>Con entrada general; consultá la sección entradas para novedades.</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -102,27 +125,44 @@ const ejes = [
     max-width: 760px;
   }
 
-  .plain-list {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 1.5rem;
-  }
-
-  .plain-list li {
+  .intro {
     display: flex;
+    gap: 1.5rem;
     align-items: flex-start;
-    gap: 0.6rem;
-    margin-bottom: 0.7rem;
   }
 
-  .plain-list li > span {
-    flex: 1;
+  .intro-panel {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    width: 100%;
+    padding: 1.5rem 1.75rem;
+    border: 1px solid var(--line);
+    border-radius: calc(var(--radius) + 4px);
+    background: var(--bg);
+    box-shadow: var(--shadow);
   }
 
-  .plain-list li > svg {
+  .intro-logo-wrap {
+    display: grid;
+    place-items: center;
     flex: none;
-    margin-top: 0.2rem;
-    color: var(--brand-700);
+    padding: 0.6rem 0.85rem;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: 0 12px 26px -14px rgba(43, 27, 94, 0.35);
+  }
+
+  .intro-logo {
+    width: 128px;
+    height: auto;
+    display: block;
+  }
+
+  .intro p {
+    margin: 0;
+    line-height: 1.65;
   }
 
   .ejes-list {
@@ -135,27 +175,98 @@ const ejes = [
     display: flex;
     gap: 1rem;
     align-items: flex-start;
-    background: var(--bg-alt);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .eje:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 22px 42px -18px rgba(43, 27, 94, 0.32),
+      -18px 22px 46px -16px rgba(37, 192, 212, 0.5),
+      18px -22px 46px -16px rgba(119, 79, 240, 0.6);
+  }
+
+  .eje-ico {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    flex: none;
+    border-radius: 50%;
+    color: #fff;
+    background: linear-gradient(135deg, var(--turquesa), var(--brand-500));
+    box-shadow: 0 10px 22px -8px rgba(37, 192, 212, 0.45);
+    filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.4));
+  }
+
+  .eje strong {
+    color: var(--ink);
+  }
+
+  .datos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin: 0 0 1.5rem;
+  }
+
+  .dato {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    background: var(--bg);
     border: 1px solid var(--line);
     border-radius: var(--radius);
     padding: 1.1rem 1.25rem;
     box-shadow: var(--shadow);
   }
 
-  .eje strong {
-    color: var(--brand-900);
+  .dato-ico {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    flex: none;
+    border-radius: 50%;
+    color: #fff;
+    background: linear-gradient(135deg, var(--turquesa), var(--brand-500));
+    box-shadow: 0 10px 22px -8px rgba(37, 192, 212, 0.45);
   }
 
-  .note {
-    margin-top: 2rem;
-    padding: 1rem 1.25rem;
-    border: 1px dashed var(--accent-gold);
-    border-radius: var(--radius);
-    background: rgba(232, 163, 61, 0.08);
-    font-size: 0.9rem;
+  .dato-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
   }
 
-  .note p {
-    margin: 0;
+  .dato-body strong {
+    color: var(--ink);
+  }
+
+  .dato-body span {
+    color: var(--muted);
+    font-size: 0.93rem;
+  }
+
+  @media (max-width: 620px) {
+    .intro-panel {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 1.2rem 1.1rem;
+    }
+
+    .intro-logo-wrap {
+      padding: 0.5rem 0.7rem;
+    }
+
+    .intro-logo {
+      width: 108px;
+    }
   }
 </style>

@@ -1,21 +1,23 @@
 ---
+// Componente: Hero principal (portada, cuenta regresiva y stats)
 import { site } from '../data/site';
 import Icon from './Icon.astro';
-import CerrosScene from './CerrosScene.astro';
+
+const base = import.meta.env.BASE_URL;
 
 const stats = [
-  { icon: 'building', num: '200+', label: 'stands de empresas' },
-  { icon: 'users', num: '30.000', label: 'visitantes esperados' },
-  { icon: 'calendar', num: '4', label: 'días de eventos' },
-  { icon: 'globe', num: '4', label: 'países del Corredor' },
+  { icon: 'building', target: 200, suffix: '+', label: 'stands de empresas' },
+  { icon: 'users', target: 30000, suffix: '', label: 'visitantes esperados' },
+  { icon: 'calendar', target: 4, suffix: '', label: 'días de eventos' },
+  { icon: 'globe', target: 4, suffix: '', label: 'países del Corredor' },
 ];
 ---
 
 <section class="hero">
-  <CerrosScene class="hero-scene" />
-
+  <div class="hero-bg" aria-hidden="true"></div>
   <div class="container hero-inner">
     <div class="hero-copy">
+      <span class="hero-brand"><span class="hero-brand-e">E</span>XPO<span>JUY</span> <span class="hero-year">2026</span></span>
       <span class="chip hero-chip">
         <Icon name="calendar" size={15} strokeWidth={2.2} />
         {site.edition} · {site.dates}
@@ -24,45 +26,64 @@ const stats = [
         La muestra multisectorial más importante del <em>norte argentino</em>
       </h1>
       <p class="hero-lede">
-        {site.tagline}. Empresas, productores, servicios, cultura y rondas de
-        negocios internacionales en el corazón del Corredor Bioceánico de
-        Capricornio.
+        {site.tagline}.
       </p>
       <div class="hero-actions">
-        <a class="btn btn-accent" href="/agenda/">
+        <a class="btn btn-accent" href={base + 'agenda/'}>
           Ver la agenda <Icon name="calendar" size={18} />
         </a>
-        <a class="btn btn-outline" href="/expositores/">
+        <a class="btn btn-outline" href={base + 'expositores/'}>
           Explorar expositores <Icon name="arrow" size={18} />
         </a>
       </div>
     </div>
 
-    <div class="hero-card" aria-label="Datos del evento">
+    <div class="hero-card" aria-label="Cuenta regresiva para la inauguración">
       <span class="hero-card-title">
-        <Icon name="info" size={18} /> Datos del evento
+        <Icon name="clock" size={18} />
+        <span class="hero-card-label">Faltan para la apertura</span>
       </span>
-      <dl class="hero-facts">
-        <div>
-          <dt><Icon name="calendar" size={15} /> Fechas</dt>
-          <dd>{site.dates}</dd>
+
+      <div class="countdown" role="timer" aria-live="polite" aria-label="Cuenta regresiva">
+        <div class="count-cell">
+          <span class="count-value" data-count="days">0</span>
+          <span class="count-unit">días</span>
         </div>
-        <div>
-          <dt><Icon name="mappin" size={15} /> Lugar</dt>
-          <dd>Ciudad Cultural · San Salvador de Jujuy</dd>
+        <div class="count-cell">
+          <span class="count-value" data-count="hours">0</span>
+          <span class="count-unit">horas</span>
         </div>
-        <div>
-          <dt><Icon name="sparkles" size={15} /> Lema</dt>
-          <dd>{site.tagline}</dd>
+        <div class="count-cell">
+          <span class="count-value" data-count="minutes">0</span>
+          <span class="count-unit">min</span>
         </div>
-        <div>
-          <dt><Icon name="ticket" size={15} /> Entradas</dt>
-          <dd>Próximamente por este sitio</dd>
+        <div class="count-cell">
+          <span class="count-value" data-count="seconds">0</span>
+          <span class="count-unit">seg</span>
         </div>
-      </dl>
-      <a class="btn btn-primary hero-cta" href="/contacto/">
+      </div>
+
+      <p class="hero-place">
+        <Icon name="calendar" size={15} /> {site.dates}
+      </p>
+
+      <p class="hero-place">
+        <Icon name="mappin" size={15} /> Ciudad Cultural
+      </p>
+
+      <p class="hero-place">
+        <Icon name="ticket" size={15} /> Entradas: próximamente en este sitio
+      </p>
+
+      <a class="btn btn-accent hero-cta" href={base + 'contacto/'}>
         Quiero participar <Icon name="send" size={18} />
       </a>
+
+      <div class="hero-organizers">
+        <img src={base + 'logos/logo-camara.png'} alt="Cámara de Comercio Exterior de Jujuy" />
+        <img src={base + 'logos/logo-ministerio.png'} alt="Ministerio de Desarrollo Económico y Producción" />
+        <img src={base + 'logos/logo-muni.png'} alt="Municipalidad de San Salvador de Jujuy" />
+      </div>
     </div>
   </div>
 
@@ -75,7 +96,11 @@ const stats = [
               <Icon name={s.icon} size={22} strokeWidth={1.8} />
             </span>
             <span>
-              <span class="hero-stat-num">{s.num}</span>
+              <span
+                class="hero-stat-num"
+                data-target={s.target}
+                data-suffix={s.suffix}
+              >0{s.suffix}</span>
               <span class="hero-stat-label">{s.label}</span>
             </span>
           </div>
@@ -88,43 +113,91 @@ const stats = [
 <style>
   .hero {
     position: relative;
-    background:
-      radial-gradient(1100px 480px at 88% -10%, rgba(10, 116, 165, 0.5), transparent 60%),
-      linear-gradient(160deg, #032f47 0%, #044463 55%, #065a82 100%);
+    background: #17131f;
     color: #fff;
-    padding: 5rem 0 0;
+    padding: 0;
     overflow: hidden;
   }
 
-  .hero-scene {
+  .hero-bg {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.95;
-    pointer-events: none;
+    background:
+      linear-gradient(90deg, rgba(10, 8, 16, 0.55) 0%, rgba(10, 8, 16, 0.36) 55%, rgba(10, 8, 16, 0.18) 100%),
+      url('/img/evento/banner-expojuy.png') center / cover no-repeat;
+    animation: heroKenburns 18s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  @keyframes heroKenburns {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.08);
+    }
+  }
+
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(10, 8, 16, 0.12) 0%, rgba(10, 8, 16, 0.18) 100%);
   }
 
   .hero-inner {
     position: relative;
+    z-index: 5;
     display: grid;
     grid-template-columns: 1.2fr 0.8fr;
     gap: 3rem;
     align-items: center;
-    padding-bottom: 4rem;
+    padding: 3.5rem 0 4rem;
   }
 
   .hero-copy {
     position: relative;
   }
 
+  .hero-brand {
+    display: block;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.9rem;
+    background: linear-gradient(
+      100deg,
+      #ffffff 0%,
+      #ffffff 20%,
+      var(--turquesa) 48%,
+      var(--accent-gold) 90%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 6px 24px rgba(37, 192, 212, 0.28));
+  }
+
+  .hero-brand .hero-brand-e {
+    color: var(--brand-500);
+    -webkit-text-fill-color: var(--brand-500);
+  }
+
   .hero-chip {
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
-    color: var(--accent-gold);
-    border-color: rgba(232, 163, 61, 0.5);
-    background: rgba(232, 163, 61, 0.12);
+    color: #fff;
+    background: var(--brand-500);
+    border: 1px solid var(--brand-500);
+    box-shadow: 0 8px 20px -10px rgba(119, 79, 240, 0.6);
+  }
+
+  .hero-chip svg {
+    color: var(--turquesa);
   }
 
   .hero-title {
@@ -132,6 +205,8 @@ const stats = [
     font-size: clamp(1.9rem, 4.2vw, 3.1rem);
     margin: 1.1rem 0 1rem;
     text-wrap: balance;
+    text-transform: none;
+    letter-spacing: 0.02em;
   }
 
   .hero-title em {
@@ -144,6 +219,9 @@ const stats = [
     color: rgba(255, 255, 255, 0.9);
     max-width: 34em;
     margin-bottom: 1.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 600;
   }
 
   .hero-actions {
@@ -158,11 +236,23 @@ const stats = [
     gap: 0.55rem;
   }
 
+  .hero .btn-accent {
+    background: linear-gradient(135deg, var(--turquesa), var(--brand-500));
+    color: #fff;
+    border: none;
+    box-shadow: 0 10px 22px -8px rgba(37, 192, 212, 0.45);
+  }
+
+  .hero .btn-accent:hover {
+    background: linear-gradient(135deg, var(--brand-500), var(--brand-500));
+    box-shadow: 0 10px 22px -8px rgba(119, 79, 240, 0.5);
+  }
+
   .hero-card {
     position: relative;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    backdrop-filter: blur(6px);
+    background: rgba(43, 27, 94, 0.35);
+    border: 1px solid rgba(187, 140, 255, 0.3);
+    backdrop-filter: blur(8px);
     border-radius: var(--radius);
     padding: 1.6rem;
     box-shadow: 0 22px 48px -18px rgba(0, 0, 0, 0.45);
@@ -171,44 +261,102 @@ const stats = [
   .hero-card-title {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.45rem;
     font-family: var(--font-head);
-    font-weight: 600;
+    font-weight: 700;
     color: var(--accent-gold);
     margin-bottom: 1.1rem;
   }
 
-  .hero-facts {
-    margin: 0 0 1.4rem;
+  .hero-card-label {
+    background: linear-gradient(90deg, var(--turquesa), var(--lavanda));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--turquesa);
+  }
+
+  .hero-card-title svg {
+    color: var(--turquesa);
+    animation: heroPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes heroPulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.12);
+      opacity: 0.85;
+    }
+  }
+
+  .countdown {
     display: grid;
-    gap: 0.85rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    margin: 0 0 1rem;
   }
 
-  .hero-facts div {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
-    padding-bottom: 0.75rem;
+  .count-cell {
+    display: grid;
+    place-items: center;
+    gap: 0.1rem;
+    padding: 0.6rem 0.25rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(187, 140, 255, 0.35);
   }
 
-  .hero-facts div:last-child {
-    border-bottom: 0;
-    padding-bottom: 0;
+  .count-value {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: #fff;
+    line-height: 1.05;
+    font-variant-numeric: tabular-nums;
   }
 
-  .hero-facts dt {
+  .count-unit {
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--turquesa);
+    font-weight: 600;
+  }
+
+  .hero-place {
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: rgba(255, 255, 255, 0.75);
-    font-weight: 700;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0 0 1.1rem;
   }
 
-  .hero-facts dd {
-    margin: 0.2rem 0 0;
-    font-weight: 500;
-    line-height: 1.5;
+  .hero-place svg {
+    color: var(--turquesa);
+    flex: none;
+  }
+
+  .hero-organizers {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.2rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  .hero-organizers img {
+    display: block;
+    height: 40px;
+    width: auto;
   }
 
   .hero-cta {
@@ -223,14 +371,14 @@ const stats = [
 
   .hero .btn-outline:hover {
     background: #fff;
-    color: var(--brand-900);
+    color: #1b1140;
   }
 
   .hero-stats {
     position: relative;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(3, 47, 71, 0.45);
-    backdrop-filter: blur(4px);
+    border-top: 1px solid rgba(187, 140, 255, 0.35);
+    background: rgba(43, 27, 94, 0.55);
+    backdrop-filter: blur(8px);
   }
 
   .hero-stats > .container {
@@ -257,18 +405,20 @@ const stats = [
     height: 46px;
     flex: none;
     border-radius: 12px;
-    background: rgba(232, 163, 61, 0.16);
-    border: 1px solid rgba(232, 163, 61, 0.35);
-    color: var(--accent-gold);
+    background: linear-gradient(135deg, var(--turquesa), var(--brand-500));
+    color: #fff;
+    box-shadow: 0 10px 22px -8px rgba(37, 192, 212, 0.45);
   }
 
   .hero-stat-num {
-    display: block;
+    display: inline-block;
     font-family: var(--font-head);
     font-weight: 700;
     font-size: 1.5rem;
     color: #fff;
     line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+    min-width: 2.4ch;
   }
 
   .hero-stat-label {
@@ -292,10 +442,6 @@ const stats = [
   }
 
   @media (max-width: 820px) {
-    .hero {
-      padding-top: 3.2rem;
-    }
-
     .hero-inner {
       grid-template-columns: 1fr;
       gap: 2rem;
@@ -318,3 +464,57 @@ const stats = [
     }
   }
 </style>
+
+<script>
+  const fmt = (n) => n >= 1000 ? n.toLocaleString('es-AR') : n.toString();
+
+  const statNums = Array.from(document.querySelectorAll('.hero-stat-num'));
+  if (statNums.length) {
+    const animate = (el) => {
+      const target = Number(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      const duration = 1600;
+      const start = performance.now();
+      const tick = (now) => {
+        const t = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        const value = Math.round(target * eased);
+        el.textContent = fmt(value) + suffix;
+        if (t < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animate(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    statNums.forEach((el) => observer.observe(el));
+  }
+
+  const countCells = Array.from(document.querySelectorAll('[data-count]'));
+  if (countCells.length) {
+    const target = new Date(2026, 9, 9, 10, 0, 0).getTime();
+
+    const render = () => {
+      let diff = target - Date.now();
+      if (diff < 0) diff = 0;
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
+      const map = { days, hours, minutes, seconds };
+      countCells.forEach((el) => {
+        el.textContent = String(map[el.dataset.count]).padStart(2, '0');
+      });
+    };
+
+    render();
+    setInterval(render, 1000);
+  }
+</script>

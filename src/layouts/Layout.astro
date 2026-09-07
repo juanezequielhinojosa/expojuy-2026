@@ -1,7 +1,11 @@
 ---
+// Layout: estructura base (header, ticker, footer, WhatsApp) + SEO
 import '../styles/global.css';
-import Header from '../components/Header.astro';
+import '../styles/header.css';
+import Header from '../components/react/Header.tsx';
 import Footer from '../components/Footer.astro';
+import Ticker from '../components/Ticker.astro';
+import WhatsappFloat from '../components/WhatsappFloat.astro';
 import { site } from '../data/site';
 
 interface Props {
@@ -12,7 +16,7 @@ interface Props {
 const { title, description } = Astro.props;
 const pageTitle = title === site.title ? site.title : `${title} · ${site.title}`;
 
-const ogImage = new URL('/og-default.png', Astro.site ?? 'https://expojuy2026.ar').href;
+const ogImage = new URL(import.meta.env.BASE_URL + 'img/evento/banner-expojuy.png', Astro.site ?? 'https://expojuy2026.ar').href;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://expojuy2026.ar').href;
 ---
 
@@ -21,8 +25,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://expojuy2026
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" href={import.meta.env.BASE_URL + 'favicon-expo.png'} />
     <title>{pageTitle}</title>
     <meta
       name="description"
@@ -30,24 +33,109 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://expojuy2026
     />
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonical} />
+    <!-- Tipografía anterior (Poppins/Inter) vía Google Fonts — se revierte descomentando:
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+    -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description ?? site.tagline} />
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="theme-color" content="#044463" />
+    <meta name="theme-color" content="#3B2A82" />
   </head>
   <body>
-    <Header />
+    <Header currentPath={Astro.url.pathname} client:load />
+    <Ticker />
     <main id="main">
       <slot />
     </main>
     <Footer />
+    <WhatsappFloat />
+    <script>
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduce) {
+        const targets = document.querySelectorAll('main > section');
+        targets.forEach((el) => el.classList.add('reveal'));
+
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+        );
+
+        targets.forEach((el) => io.observe(el));
+      }
+    </script>
   </body>
 </html>
+
+<style is:global>
+  main {
+    margin: 0;
+    padding: 0;
+  }
+
+  main > *:first-child {
+    margin-top: 0;
+  }
+
+  .ticker {
+    margin: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    animation: page-fade 0.7s ease both;
+  }
+
+  @keyframes page-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    will-change: opacity, transform;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    body {
+      animation: none;
+    }
+
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

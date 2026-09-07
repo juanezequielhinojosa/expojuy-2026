@@ -1,3 +1,4 @@
+// Agenda de actividades por día
 export interface AgendaItem {
   day: string;
   time: string;

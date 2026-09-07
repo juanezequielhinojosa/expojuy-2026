@@ -1,4 +1,5 @@
 ---
+// Página: Preguntas frecuentes
 import Layout from '../layouts/Layout.astro';
 import SectionTitle from '../components/SectionTitle.astro';
 import Icon from '../components/Icon.astro';
@@ -18,13 +19,13 @@ import { faqs } from '../data/faqs';
       />
 
       <div class="faq-list">
-        {faqs.map((f, i) => (
-          <details class="faq-item" open={i === 0}>
+        {faqs.map((f) => (
+          <details class="faq-item">
             <summary>
               <Icon name="chevron" size={18} />
-              <span>{f.q}</span>
+              <span>{f.question}</span>
             </summary>
-            <p>{f.a}</p>
+            <p>{f.answer}</p>
           </details>
         ))}
       </div>
@@ -47,6 +48,25 @@ import { faqs } from '../data/faqs';
     text-align: center;
   }
 
+  .faq-list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .faq-item {
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+background:
+      linear-gradient(var(--bg), var(--bg)) padding-box,
+      linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--turquesa) 55%, transparent),
+        color-mix(in srgb, var(--brand-500) 65%, transparent)
+      )
+      border-box;
+    box-shadow: var(--shadow);
+  }
+
   .faq-item summary {
     display: flex;
     align-items: center;
@@ -55,8 +75,9 @@ import { faqs } from '../data/faqs';
     padding: 1.1rem 1.3rem;
     font-family: var(--font-head);
     font-weight: 600;
-    color: var(--brand-900);
+    color: var(--ink);
     list-style: none;
+    cursor: pointer;
   }
 
   .faq-item summary::-webkit-details-marker {
@@ -69,11 +90,17 @@ import { faqs } from '../data/faqs';
 
   .faq-item summary svg {
     flex: none;
-    color: var(--accent-gold-dark);
+    color: var(--turquesa);
     transition: transform 0.2s ease;
   }
 
   .faq-item[open] summary svg {
     transform: rotate(90deg);
+  }
+
+  .faq-item > p {
+    margin: 0;
+    padding: 0 1.3rem 1.1rem;
+    color: var(--muted);
   }
 </style>

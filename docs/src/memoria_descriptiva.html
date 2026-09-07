@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8" />
@@ -14,32 +14,32 @@
     color: #1c2733;
     margin: 0;
   }
-  h1 { font-size: 20pt; margin: 0 0 4px; color: #044463; }
+  h1 { font-size: 20pt; margin: 0 0 4px; color: #2B1B5E; }
   h2 {
     font-size: 13.5pt;
-    color: #044463;
-    border-bottom: 2px solid #e8a33d;
+    color: #2B1B5E;
+    border-bottom: 2px solid #25C0D4;
     padding-bottom: 4px;
     margin: 22px 0 10px;
   }
-  h3 { font-size: 11.5pt; margin: 16px 0 6px; color: #a5632f; }
+  h3 { font-size: 11.5pt; margin: 16px 0 6px; color: #6143C9; }
   p { margin: 0 0 8px; }
   ul { margin: 0 0 10px; padding-left: 20px; }
   li { margin-bottom: 3px; }
   .cover {
-    border: 3px solid #044463;
+    border: 3px solid #2B1B5E;
     border-radius: 8px;
     padding: 22px 26px;
     margin-bottom: 18px;
-    background: #f4f8fb;
+    background: #f6f4fb;
   }
-  .cover .sub { font-size: 12pt; color: #a5632f; font-weight: bold; }
+  .cover .sub { font-size: 12pt; color: #6143C9; font-weight: bold; }
   .meta { font-size: 9.5pt; color: #55636f; margin-top: 10px; }
   .tag {
     display: inline-block;
-    background: #e8a33d22;
-    border: 1px solid #e8a33d;
-    color: #7a4a1c;
+    background: #25C0D41a;
+    border: 1px solid #25C0D4;
+    color: #0f6b77;
     border-radius: 4px;
     padding: 1px 8px;
     font-size: 9pt;
@@ -48,8 +48,8 @@
   }
   table { border-collapse: collapse; width: 100%; margin: 8px 0 12px; font-size: 10pt; }
   th, td { border: 1px solid #c8d3dc; padding: 5px 8px; text-align: left; vertical-align: top; }
-  th { background: #044463; color: #fff; }
-  tr:nth-child(even) td { background: #f4f8fb; }
+  th { background: #2B1B5E; color: #fff; }
+  tr:nth-child(even) td { background: #f6f4fb; }
   .footer-note { margin-top: 24px; font-size: 8.5pt; color: #77828c; border-top: 1px solid #c8d3dc; padding-top: 8px; }
 </style>
 </head>
@@ -79,8 +79,9 @@
   </p>
   <p>
     El contenido incluido (expositores, agenda, noticias y sponsors) es <strong>de
-    ejemplo</strong> y se reemplaza por la información oficial del kit y de la
-    organización cuando esté disponible.
+    ejemplo</strong> y se reemplaza por la información oficial de la organización
+    cuando esté disponible. Sí se aplica el <strong>Kit de Diseño oficial</strong>
+    (logotipos y tipografía Ambit).
   </p>
 
   <h2>2. Consignas que se abordan</h2>
@@ -95,20 +96,22 @@
     <li>Entrega como <strong>prototipo funcional navegable en GitHub + memoria en PDF</strong>.</li>
   </ul>
 
-  <h2>3. Identidad visual propuesta</h2>
+  <h2>3. Identidad visual aplicada</h2>
   <p>
-    Al no contar aún con el kit de diseño oficial, la propuesta utiliza una
-    identidad provisoria construida sobre la región y el evento, fácil de
-    reemplazar por los assets oficiales cuando sean entregados.
+    La propuesta respeta el <strong>Kit de Diseño oficial</strong> del concurso
+    (carpeta de recursos del Drive: logotipos ExpoJuy 2026 y de la Cámara de
+    Comercio Exterior de Jujuy, y la tipografía <strong>Ambit</strong>).
+    Sobre esa base se construye una identidad propia para el evento.
   </p>
   <table>
     <tr><th>Elemento</th><th>Propuesta</th></tr>
-    <tr><td>Colores</td><td>Azul profundo #044463 (base), ámbar #e8a33d (destacados), terracota #c0572d (énfasis), neutros claros para fondos.</td></tr>
-    <tr><td>Tipografías</td><td>Poppins (títulos) e Inter (texto), desde Google Fonts.</td></tr>
+    <tr><td>Tipografías</td><td><strong>Ambit</strong> (fuente oficial del Kit) en sus pesos <em>Light, Regular, SemiBold</em> y <em>Bold</em>, autoalojada en <code>/fonts/</code> (archivos .otf, sin Google Fonts).</td></tr>
+    <tr><td>Colores</td><td>Violeta de marca <code>--brand</code> (gama #2B1B5E → #774FF0) con acento turquesa #25C0D4; fondos neutros claros. Paleta provisoria hasta que la organización publique los HEX/RGB oficiales.</td></tr>
     <tr><td>Lema</td><td>“Conectando países, creando oportunidades”.</td></tr>
     <tr><td>Estilo</td><td>Tarjetas, pestañas por día, acordeones, botones con jerarquía y componentes accesibles.</td></tr>
     <tr><td>Iconografía</td><td>Set de iconos SVG propios (línea, estilo lucide) para secciones, rubros, agenda y redes sociales, con gradiente propio por rubro.</td></tr>
     <tr><td>Ilustraciones</td><td>Escena vectorial de cerros jujeños y sol andino (remitiendo a la Quebrada) usada en hero, CTA y logo/favicon.</td></tr>
+    <tr><td>Imágenes</td><td>Fotografía y materiales institucionales de ExpoJuy reutilizados en hero, sectores, galería y sponsors.</td></tr>
   </table>
 
   <h2>4. Mapa del sitio</h2>
@@ -119,6 +122,7 @@
     <tr><td>Expositores</td><td>Buscador y filtro por rubro (8 rubros), 12 expositores de ejemplo, enlace por rubro desde el inicio.</td></tr>
     <tr><td>Agenda</td><td>Pestañas por día (9 al 12 de octubre) con 16 actividades de ejemplo organizadas en tabla.</td></tr>
     <tr><td>Noticias</td><td>Tarjetas con 4 novedades de ejemplo.</td></tr>
+    <tr><td>Galería</td><td>Recorrido de imágenes del evento (hero, ediciones y galería).</td></tr>
     <tr><td>Mapa</td><td>Mapa embebido del predio (Ciudad Cultural) y accesos; el plano interactivo de stands se incorpora en la versión final.</td></tr>
     <tr><td>Sponsors</td><td>Bloque institucional y comercial con 10 partners de ejemplo y convocatoria.</td></tr>
     <tr><td>Contacto</td><td>Formulario de consulta (validación en cliente) y datos de contacto.</td></tr>
@@ -130,8 +134,9 @@
   <ul>
     <li><strong>Framework:</strong> Astro 7 (salida estática) con TypeScript estricto.</li>
     <li><strong>Fuente de datos:</strong> módulos tipados en <code>src/data/</code> (site, exhibitors, agenda, news, sponsors, faqs) que permiten actualizar contenido sin tocar las páginas.</li>
-    <li><strong>Componentes:</strong> Header (menú responsive), Footer, Hero, SectionTitle, tarjetas de expositor y noticia.</li>
-    <li><strong>Interactividad mínima:</strong> filtro/buscador de expositores, pestañas de agenda, acordeón FAQ y formulario de contacto (vanilla JS, sin dependencias).</li>
+    <li><strong>Componentes:</strong> Header (menú responsive) y formulario de contacto en <strong>React</strong>; Footer, Hero, SectionTitle, tarjetas de expositor y noticia en Astro.</li>
+    <li><strong>Interactividad:</strong> filtro/buscador de expositores, pestañas de agenda y acordeón FAQ en vanilla JS; menú y formulario con React (sin dependencias adicionales).</li>
+    <li><strong>Tipografía:</strong> fuentes oficiales Ambit autoalojadas en <code>/fonts/</code> vía <code>@font-face</code> (sin Google Fonts ni terceros).</li>
     <li><strong>Gráficos:</strong> iconos e ilustraciones vectoriales SVG propios (sin assets externos ni licencias).</li>
     <li><strong>SEO:</strong> layout base con <code>&lt;title&gt;</code>, meta description y Open Graph por página.</li>
     <li><strong>Publicación:</strong> repositorio Git en GitHub; es desplegable en cualquier hosting estático (GitHub Pages, Netlify, Vercel).</li>
@@ -146,7 +151,7 @@
 
   <h2>7. Próximos pasos</h2>
   <ul>
-    <li>Aplicar el <strong>kit de diseño oficial</strong> (paleta, tipografías, imaginería y logotipos) cuando esté disponible.</li>
+    <li>Aplicar la <strong>paleta HEX/RGB oficial</strong> y el manual de identidad cuando la organización los publique (hoy se usa una gama violeta/turquesa propia).</li>
     <li>Cargar la <strong>nómina real de expositores, sponsors y agenda</strong>.</li>
     <li>Incorporar el <strong>plano interactivo</strong> del predio vinculado a los stands.</li>
     <li>Conectar el formulario y los enlaces de entradas a los sistemas oficiales.</li>

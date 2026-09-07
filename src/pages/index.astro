@@ -1,33 +1,41 @@
 ---
+// Página: Inicio
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
+import HeroCarousel from '../components/HeroCarousel.astro';
 import SectionTitle from '../components/SectionTitle.astro';
 import NewsCard from '../components/NewsCard.astro';
 import SectorIcon from '../components/SectorIcon.astro';
 import Icon from '../components/Icon.astro';
-import CerrosScene from '../components/CerrosScene.astro';
+import VideoEmbed from '../components/VideoEmbed.astro';
 import { site } from '../data/site';
 import { news } from '../data/news';
 import { rubros } from '../data/exhibitors';
 
+const base = import.meta.env.BASE_URL;
+
 const reasons = [
   {
     icon: 'globe',
+    image: base + 'img/razones/corredor-bioceanico.webp',
     title: 'Corredor Bioceánico',
     text: 'La plataforma de integración con Chile, Paraguay, Brasil y Bolivia que abre mercados a la producción jujeña.',
   },
   {
     icon: 'gem',
+    image: base + 'img/razones/mineria-sustentable.jfif',
     title: 'Minería sustentable',
     text: 'La cadena de valor de la Puna, el litio y la energía como ejes del desarrollo provincial.',
   },
   {
     icon: 'cpu',
+    image: base + 'img/razones/economia-conocimiento.webp',
     title: 'Economía del conocimiento',
     text: 'Tecnología, innovación y talento jujeño con iniciativas como el Desafío Digital ExpoJuy 2026.',
   },
   {
     icon: 'mountain',
+    image: base + 'img/razones/turismo.webp',
     title: 'Turismo y cultura',
     text: 'La Quebrada, las salinas y la identidad del norte argentino como destino y experiencia.',
   },
@@ -35,21 +43,34 @@ const reasons = [
 
 const agendaHighlights = [
   {
-    icon: 'truck',
+    icon: 'briefcase',
     title: 'Rondas de negocios',
     text: 'Encuentros entre empresas locales y delegaciones de Argentina, Chile, Paraguay y Brasil vinculados al Corredor Bioceánico de Capricornio.',
   },
   {
-    icon: 'mic',
+    icon: 'users',
     title: 'Foros sectoriales',
     text: 'Minería sustentable, economía del conocimiento, turismo de la Quebrada y Puna, y oportunidades para el interior provincial.',
   },
   {
-    icon: 'heart',
+    icon: 'sparkles',
     title: 'Cultura y tradición',
     text: 'Espectáculos en vivo, feria de artesanos, gastronomía regional y la identidad del norte argentino en cada jornada.',
   },
 ];
+
+const SECTOR_IMAGES: Record<string, string> = {
+  'Minería': base + 'img/sectores/mineria.jpg',
+  'Agroindustria': base + 'img/sectores/agroindustria.jpg',
+  'Turismo': base + 'img/sectores/turismo.jfif',
+  'Industria': base + 'img/sectores/industria.webp',
+  'Tecnología': base + 'img/sectores/tecnologia.jpg',
+  'Comercio': base + 'img/sectores/comercio.jpg',
+  'Servicios': base + 'img/sectores/servicios.jfif',
+  'Artesanías': base + 'img/sectores/artesanias.jpg',
+};
+
+const sectorImage = (r: string) => SECTOR_IMAGES[r] ?? SECTOR_IMAGES['Industria'];
 ---
 
 <Layout
@@ -58,6 +79,24 @@ const agendaHighlights = [
 >
   <Hero />
 
+  <!-- Hero carousel / Galería -->
+  <section class="section section-alt" aria-labelledby="galeria">
+    <div class="container">
+      <SectionTitle
+        kicker="Galería"
+        title="Imágenes del evento"
+        lede="Un recorrido visual por la muestra."
+      />
+      <HeroCarousel />
+      <p class="gallery-more">
+        <a class="btn btn-accent" href={base + 'galeria/'}>
+          Ver toda la galería completa <Icon name="arrow" size={18} />
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Sectores productivos -->
   <section class="section section-decor" aria-labelledby="sectores">
     <div class="container">
       <SectionTitle
@@ -68,12 +107,20 @@ const agendaHighlights = [
       <div class="sector-grid">
         {
           rubros.map((r) => (
-            <a class="sector-tile" href={`/expositores/?rubro=${encodeURIComponent(r)}`}>
-              <SectorIcon rubro={r} size="lg" />
-              <span class="sector-tile-name">{r}</span>
-              <span class="sector-tile-go" aria-hidden="true">
-                <Icon name="arrow" size={16} />
-              </span>
+            <a class="sector-card" href={`${base}expositores/?rubro=${encodeURIComponent(r)}`}>
+              <div class="sector-thumb">
+                <img src={sectorImage(r)} alt={r} loading="lazy" />
+                <span class="sector-thumb-shade" aria-hidden="true"></span>
+                <span class="sector-ico" aria-hidden="true">
+                  <SectorIcon rubro={r} size="sm" plain />
+                </span>
+              </div>
+              <div class="sector-body">
+                <span class="sector-name">{r}</span>
+                <span class="sector-go" aria-hidden="true">
+                  <Icon name="arrow" size={16} />
+                </span>
+              </div>
             </a>
           ))
         }
@@ -81,6 +128,7 @@ const agendaHighlights = [
     </div>
   </section>
 
+  <!-- Por qué ExpoJuy -->
   <section class="section section-alt" aria-labelledby="por-que">
     <div class="container">
       <SectionTitle
@@ -92,11 +140,17 @@ const agendaHighlights = [
         {
           reasons.map((r) => (
             <article class="reason-card">
-              <span class="icon-circle icon-circle--gold">
-                <Icon name={r.icon} size={26} strokeWidth={1.8} />
-              </span>
-              <h3>{r.title}</h3>
-              <p>{r.text}</p>
+              <div class="reason-thumb">
+                <img src={r.image} alt={r.title} loading="lazy" />
+                <span class="reason-thumb-shade" aria-hidden="true"></span>
+                <span class="reason-ico" aria-hidden="true">
+                  <Icon name={r.icon} size={26} strokeWidth={1.8} />
+                </span>
+              </div>
+              <div class="reason-body">
+                <h3>{r.title}</h3>
+                <p>{r.text}</p>
+              </div>
             </article>
           ))
         }
@@ -104,6 +158,7 @@ const agendaHighlights = [
     </div>
   </section>
 
+  <!-- Destacados de la agenda -->
   <section class="section section-decor" aria-labelledby="destacados-agenda">
     <div class="container">
       <SectionTitle
@@ -116,41 +171,55 @@ const agendaHighlights = [
           agendaHighlights.map((f, i) => (
             <article class="feature">
               <span class="feature-num">{String(i + 1).padStart(2, '0')}</span>
-              <span class="icon-circle">
-                <Icon name={f.icon} size={24} strokeWidth={1.8} />
-              </span>
-              <h3>{f.title}</h3>
-              <p>{f.text}</p>
+              <div class="feature-top">
+                <span class="icon-circle">
+                  <Icon name={f.icon} size={24} strokeWidth={1.8} />
+                </span>
+              </div>
+              <div class="feature-body">
+                <h3>{f.title}</h3>
+                <p>{f.text}</p>
+              </div>
             </article>
           ))
         }
       </div>
       <p class="feature-cta">
-        <a class="btn btn-primary" href="/agenda/">
+        <a class="btn btn-accent" href={base + 'agenda/'}>
           Ver la agenda completa <Icon name="calendar" size={18} />
         </a>
       </p>
     </div>
   </section>
 
+  <!-- Novedades y video institucional -->
   <section class="section section-alt" id="novedades" aria-labelledby="novedades">
     <div class="container">
       <SectionTitle kicker="Novedades" title="Noticias de ExpoJuy 2026" />
+      <div class="video-strip" aria-hidden="false">
+        <VideoEmbed videoId="7A9H7fvecv4" title="Video institucional ExpoJuy" autoplay />
+      </div>
       <div class="grid grid-2">
         {news.slice(0, 3).map((item, i) => <NewsCard item={item} index={i} />)}
       </div>
       <p class="feature-cta">
-        <a class="btn btn-outline" href="/noticias/">
+        <a class="btn btn-accent" href={base + 'noticias/'}>
           Todas las noticias <Icon name="arrow" size={17} />
         </a>
       </p>
     </div>
   </section>
 
+  <!-- CTA: sumá tu propuesta -->
   <section class="section" aria-labelledby="cta">
     <div class="container">
       <div class="cta-band">
-        <CerrosScene class="cta-scene" />
+        <div class="cta-banner">
+          <picture>
+            <source media="(min-width: 768px)" srcset={base + 'img/evento/expojuy-2026.png'} />
+            <img src={base + 'img/evento/expojuy-2026.png'} alt="" loading="lazy" />
+          </picture>
+        </div>
         <div class="cta-content">
           <span class="cta-kicker">Sumá tu propuesta</span>
           <h2>¿Querés ser parte de ExpoJuy 2026?</h2>
@@ -159,10 +228,10 @@ const agendaHighlights = [
             encuentro más convocante del norte argentino.
           </p>
           <div class="cta-actions">
-            <a class="btn btn-accent" href="/contacto/">
+            <a class="btn btn-accent" href={base + 'contacto/'}>
               Contáctanos <Icon name="send" size={18} />
             </a>
-            <a class="btn btn-outline btn-dark" href="/expositores/">
+            <a class="btn btn-outline btn-dark" href={base + 'expositores/'}>
               Ver expositores <Icon name="arrow" size={18} />
             </a>
           </div>
@@ -176,49 +245,100 @@ const agendaHighlights = [
   .sector-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.1rem;
+    gap: 1.3rem;
   }
 
-  .sector-tile {
-    position: relative;
+  .sector-card {
     display: flex;
-    align-items: center;
-    gap: 1rem;
-    background: var(--bg-alt);
+    flex-direction: column;
+    background: var(--bg);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 1.15rem 1.25rem;
+    overflow: hidden;
     box-shadow: var(--shadow);
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
-  .sector-tile:hover {
-    transform: translateY(-4px);
-    border-color: rgba(4, 68, 99, 0.35);
-    box-shadow: 0 18px 36px -16px rgba(3, 47, 71, 0.3);
+  .sector-card:hover {
+    transform: translateY(-5px);
+    box-shadow:
+      0 22px 42px -18px rgba(43, 27, 94, 0.32),
+      -18px 22px 46px -16px rgba(37, 192, 212, 0.6),
+      18px -22px 46px -16px rgba(119, 79, 240, 0.7);
   }
 
-  .sector-tile-name {
+  .sector-thumb {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    border-bottom: 3px solid var(--turquesa);
+  }
+
+  .sector-thumb img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+  }
+
+  .sector-card:hover .sector-thumb img {
+    transform: scale(1.06);
+  }
+
+  .sector-thumb-shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(37, 16, 54, 0.1) 0%, rgba(37, 16, 54, 0.55) 100%);
+  }
+
+  .sector-ico {
+    position: absolute;
+    left: 0.4rem;
+    bottom: 0.6rem;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    color: #fff;
+    background: linear-gradient(135deg, var(--turquesa), var(--brand-500));
+    box-shadow: 0 10px 22px -8px rgba(37, 192, 212, 0.45);
+    filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.4));
+  }
+
+  .sector-body {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 1.1rem 1.1rem;
+  }
+
+  .sector-name {
     font-family: var(--font-head);
     font-weight: 600;
-    font-size: 1.05rem;
-    color: var(--brand-900);
+    font-size: 1.08rem;
+    color: var(--ink);
   }
 
-  .sector-tile-go {
+  .sector-go {
     margin-left: auto;
     display: grid;
     place-items: center;
-    width: 34px;
-    height: 34px;
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
-    color: var(--brand-800);
-    background: rgba(4, 68, 99, 0.07);
+    color: var(--brand-500);
+    background: var(--tint-soft);
     transition: all 0.2s ease;
   }
 
-  .sector-tile:hover .sector-tile-go {
-    background: var(--brand-800);
+  .sector-card:hover .sector-go {
+    background: var(--brand-500);
     color: #fff;
   }
 
@@ -232,21 +352,81 @@ const agendaHighlights = [
     background: var(--bg);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 1.5rem;
+    overflow: hidden;
     box-shadow: var(--shadow);
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
   }
 
   .reason-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-5px);
+    box-shadow:
+      0 22px 42px -18px rgba(43, 27, 94, 0.32),
+      -18px 22px 46px -16px rgba(37, 192, 212, 0.6),
+      18px -22px 46px -16px rgba(119, 79, 240, 0.7);
   }
 
-  .reason-card h3 {
-    margin: 1rem 0 0.5rem;
+  .reason-thumb {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    border-bottom: 3px solid var(--turquesa);
   }
 
-  .reason-card p {
+  .reason-thumb img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+  }
+
+  .reason-card:hover .reason-thumb img {
+    transform: scale(1.06);
+  }
+
+  .reason-thumb-shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(37, 16, 54, 0.1) 0%, rgba(37, 16, 54, 0.55) 100%);
+  }
+
+  .reason-ico {
+    position: absolute;
+    left: 0.4rem;
+    bottom: 0.6rem;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    color: #fff;
+    background: linear-gradient(135deg, var(--turquesa), var(--brand-500));
+    box-shadow: 0 10px 22px -8px rgba(37, 192, 212, 0.45);
+    filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.4));
+  }
+
+  .reason-body {
+    padding: 1.5rem;
+  }
+
+  .reason-body h3 {
+    margin: 0 0 0.5rem;
+  }
+
+  .reason-body p {
     margin: 0;
+  }
+
+  .video-strip {
+    width: 100%;
+    margin: 0 0 2.5rem;
   }
 
   .feature-list {
@@ -257,42 +437,55 @@ const agendaHighlights = [
 
   .feature {
     position: relative;
-    background: var(--bg-alt);
+    background: var(--bg);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 1.75rem 1.5rem 1.5rem;
-    box-shadow: var(--shadow);
     overflow: hidden;
-    transition: transform 0.2s ease;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
   }
 
   .feature:hover {
-    transform: translateY(-3px);
+    transform: translateY(-5px);
+    box-shadow:
+      0 22px 42px -18px rgba(43, 27, 94, 0.32),
+      -18px 22px 46px -16px rgba(37, 192, 212, 0.6),
+      18px -22px 46px -16px rgba(119, 79, 240, 0.7);
   }
 
-  .feature::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, var(--brand-800), var(--accent-gold));
+  .feature-top {
+    display: grid;
+    place-items: center;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, var(--brand-700), var(--brand-500));
+  }
+
+  .feature-top .icon-circle {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .feature-body {
+    padding: 1.5rem;
   }
 
   .feature-num {
     position: absolute;
     top: 1.1rem;
-    right: 1.4rem;
+    right: 1.3rem;
+    z-index: 2;
     font-family: var(--font-head);
     font-weight: 700;
-    font-size: 1.9rem;
-    color: rgba(4, 68, 99, 0.12);
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.35);
   }
 
   .feature h3 {
     font-size: 1.15rem;
-    margin: 1rem 0 0.5rem;
+    margin: 0 0 0.5rem;
   }
 
   .feature p {
@@ -304,28 +497,44 @@ const agendaHighlights = [
     margin: 2rem 0 0;
   }
 
+  .gallery-more {
+    text-align: center;
+    margin: 1.5rem 0 0;
+  }
+
   .cta-band {
     position: relative;
     overflow: hidden;
     border-radius: 22px;
-    background:
-      radial-gradient(700px 300px at 85% -30%, rgba(10, 116, 165, 0.5), transparent 60%),
-      linear-gradient(135deg, #032f47, #065a82);
-    padding: 3rem 2.5rem;
-    box-shadow: 0 30px 60px -20px rgba(3, 47, 71, 0.5);
+    background: linear-gradient(135deg, #2B1B5E, #4E3AA8);
+    padding: 2rem 2.5rem 3rem;
+    box-shadow: 0 30px 60px -20px rgba(43, 27, 94, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
   }
 
-  .cta-scene {
-    position: absolute;
-    inset: 0;
+  .cta-banner {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 5 / 2;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.6);
+  }
+
+  .cta-banner img {
     width: 100%;
     height: 100%;
-    opacity: 0.5;
-    pointer-events: none;
+    object-fit: cover;
+    object-position: center;
+    display: block;
   }
 
   .cta-content {
     position: relative;
+    z-index: 2;
     max-width: 40em;
     color: #fff;
   }
@@ -335,7 +544,7 @@ const agendaHighlights = [
     letter-spacing: 0.14em;
     font-size: 0.78rem;
     font-weight: 700;
-    color: var(--accent-gold);
+    color: var(--turquesa);
   }
 
   .cta-band h2 {
@@ -362,6 +571,18 @@ const agendaHighlights = [
 
   .btn-dark:hover {
     background: #fff;
-    color: var(--brand-900);
+    color: #1b1140;
+  }
+
+  @media (max-width: 767px) {
+    .cta-band {
+      padding: 1.5rem 1.25rem 2.25rem;
+    }
+
+    .cta-banner {
+      width: min(100%, 340px);
+      aspect-ratio: 5 / 3;
+      align-self: center;
+    }
   }
 </style>

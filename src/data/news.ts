@@ -1,3 +1,4 @@
+// Noticias de ExpoJuy 2026
 export interface NewsItem {
   date: string;
   title: string;
@@ -20,9 +21,9 @@ export const news: NewsItem[] = [
   },
   {
     date: '2026-09-01',
-    title: 'Lanzamiento del Desafío Digital ExpoJuy 2026',
+    title: 'La Cámara de Comercio organiza ExpoJuy 2026',
     excerpt:
-      'Abierta la convocatoria para diseñar el sitio web oficial. Equipos de hasta 4 personas podrán presentar su propuesta hasta el 8 de septiembre.',
+      'La Cámara de Comercio Exterior de Jujuy encabeza la organización de la 17ª edición, con el acompañamiento del Ministerio de Desarrollo y Producción y la Municipalidad de San Salvador de Jujuy.',
   },
   {
     date: '2026-09-15',

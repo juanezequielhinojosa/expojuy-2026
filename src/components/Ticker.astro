@@ -1,0 +1,80 @@
+---
+// Componente: Cinta de noticias en movimiento
+import { news } from '../data/news';
+import Icon from './Icon.astro';
+
+const items = news.map((n) => n.title);
+---
+
+<div class="ticker" role="region" aria-label="Noticias">
+  <div class="ticker-track">
+    {
+      Array.from({ length: 2 }).map(() =>
+        items.map((t) => (
+          <span class="ticker-item">
+            <span class="ticker-bullet" aria-hidden="true">
+              <Icon name="zap" size={16} strokeWidth={2} />
+            </span>
+            <span class="ticker-text">{t}</span>
+          </span>
+        )),
+      )
+    }
+  </div>
+</div>
+
+<style>
+  .ticker {
+    overflow: hidden;
+    background: linear-gradient(90deg, var(--brand-700) 0%, var(--brand-600) 40%, var(--brand-500) 100%);
+    color: #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    position: relative;
+    z-index: 40;
+    box-shadow: 0 6px 20px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  .ticker-track {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    width: max-content;
+    padding: 0.2rem 0;
+    animation: ticker-scroll 40s linear infinite;
+  }
+
+  .ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.84rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    padding: 0 1.5rem;
+  }
+
+  .ticker-bullet {
+    display: inline-flex;
+    align-items: center;
+    color: var(--turquesa);
+    line-height: 1;
+  }
+
+  :global(.ticker-bullet svg) {
+    fill: currentColor;
+    stroke: none;
+  }
+
+  @keyframes ticker-scroll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-track {
+      animation: none;
+    }
+  }
+</style>

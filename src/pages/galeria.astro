@@ -1,0 +1,95 @@
+---
+// Página: Galería de imágenes del evento
+import Layout from '../layouts/Layout.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import Icon from '../components/Icon.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const images = [
+  { src: base + 'img/hero/hero-slide-1.jpg', alt: 'Inauguración oficial de ExpoJuy' },
+  { src: base + 'img/hero/hero-slide-2.jpg', alt: 'Pabellones de expositores' },
+  { src: base + 'img/hero/hero-slide-3.jpg', alt: 'Visitantes recorriendo la feria' },
+  { src: base + 'img/hero/hero-slide-4.jpg', alt: 'Empresas y productos' },
+  { src: base + 'img/hero/hero-slide-5.jpg', alt: 'Ambiente del evento' },
+  { src: base + 'img/evento/expo-2010.jpg', alt: 'ExpoJuy 2010' },
+  { src: base + 'img/evento/expo-2011.jpg', alt: 'ExpoJuy 2011' },
+  { src: base + 'img/galeria/galeria-1.jpg', alt: 'Fotos de ExpoJuy' },
+  { src: base + 'img/galeria/galeria-2.jpg', alt: 'Fotos de ExpoJuy' },
+  { src: base + 'img/galeria/galeria-3.jpg', alt: 'Fotos de ExpoJuy' },
+  { src: base + 'img/galeria/galeria-4.jpg', alt: 'Fotos de ExpoJuy' },
+  { src: base + 'img/galeria/galeria-5.jpg', alt: 'Fotos de ExpoJuy' },
+  { src: base + 'img/galeria/galeria-6.jpg', alt: 'Fotos de ExpoJuy' },
+  { src: base + 'img/galeria/galeria-7.jpg', alt: 'Fotos de ExpoJuy' },
+  { src: base + 'img/galeria/galeria-8.jpg', alt: 'Fotos de ExpoJuy' },
+  { src: base + 'img/galeria/galeria-9.jpg', alt: 'Fotos de ExpoJuy' },
+  { src: base + 'img/galeria/galeria-10.jpg', alt: 'Fotos de ExpoJuy' },
+];
+---
+
+<Layout
+  title="Galería"
+  description="Galería de imágenes de ExpoJuy 2026 y ediciones anteriores."
+>
+  <section class="section">
+    <div class="container">
+      <SectionTitle
+        kicker="Galería"
+        title="Toda la galería"
+        lede="Un recorrido visual por la muestra y sus ediciones."
+      />
+      <ul class="gallery">
+        {
+          images.map((img) => (
+            <li>
+              <figure>
+                <img src={img.src} alt={img.alt} loading="lazy" />
+              </figure>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="gallery-back">
+        <a class="btn btn-outline" href={base}>
+          <Icon name="chevron" size={18} /> Volver al inicio
+        </a>
+      </p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .gallery {
+    list-style: none;
+    margin: 0 0 2rem;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.1rem;
+  }
+
+  .gallery figure {
+    margin: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    aspect-ratio: 16 / 10;
+    background: var(--bg-alt);
+  }
+
+  .gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+  }
+
+  .gallery figure:hover img {
+    transform: scale(1.05);
+  }
+
+  .gallery-back {
+    text-align: center;
+  }
+</style>

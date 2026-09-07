@@ -1,4 +1,5 @@
 ---
+// Página: Mapa y accesos al predio
 import Layout from '../layouts/Layout.astro';
 import SectionTitle from '../components/SectionTitle.astro';
 import Icon from '../components/Icon.astro';
@@ -26,34 +27,46 @@ import Icon from '../components/Icon.astro';
           ></iframe>
         </div>
 
-<aside class="map-info">
+          <aside class="map-info">
           <h3>Accesos y recomendaciones</h3>
-          <ul class="plain-list">
-            <li>
-              <Icon name="mappin" size={17} />
-              <span><strong>Dirección:</strong> Predio ferial de la Ciudad Cultural, San Salvador de Jujuy.</span>
+          <ul class="accesos">
+            <li class="acceso" style="--from:#25C0D4;--to:#6143C9">
+              <span class="acceso-ico" aria-hidden="true">
+                <Icon name="mappin" size={19} strokeWidth={1.8} />
+              </span>
+              <div class="acceso-body">
+                <strong>Dirección</strong>
+                <span>Predio ferial de la Ciudad Cultural, San Salvador de Jujuy.</span>
+              </div>
             </li>
-            <li>
-              <Icon name="building" size={17} />
-              <span><strong>Centro:</strong> a pocos minutos del centro de la ciudad capital.</span>
+            <li class="acceso" style="--from:#774FF0;--to:#25C0D4">
+              <span class="acceso-ico" aria-hidden="true">
+                <Icon name="target" size={19} strokeWidth={1.8} />
+              </span>
+              <div class="acceso-body">
+                <strong>Centro</strong>
+                <span>A pocos minutos del centro de la ciudad capital.</span>
+              </div>
             </li>
-            <li>
-              <Icon name="truck" size={17} />
-              <span><strong>Transporte:</strong> líneas de colectivo urbano con paradas en el predio y estacionamiento para autos.</span>
+            <li class="acceso" style="--from:#25C0D4;--to:#820CD0">
+              <span class="acceso-ico" aria-hidden="true">
+                <Icon name="truck" size={19} strokeWidth={1.8} />
+              </span>
+              <div class="acceso-body">
+                <strong>Transporte</strong>
+                <span>Líneas de colectivo urbano con paradas en el predio y estacionamiento para autos.</span>
+              </div>
             </li>
-            <li>
-              <Icon name="heart" size={17} />
-              <span><strong>Accesibilidad:</strong> rampas y recorridos accesibles en todo el predio.</span>
+            <li class="acceso" style="--from:#BB8CFF;--to:#25C0D4">
+              <span class="acceso-ico" aria-hidden="true">
+                <Icon name="heart" size={19} strokeWidth={1.8} />
+              </span>
+              <div class="acceso-body">
+                <strong>Accesibilidad</strong>
+                <span>Rampas y recorridos accesibles en todo el predio.</span>
+              </div>
             </li>
           </ul>
-
-          <div class="plano-note">
-            <span class="chip">Plano interactivo</span>
-            <p>
-              El plano del predio con los stands se publicará en la versión
-              final del sitio, vinculado al buscador de expositores.
-            </p>
-          </div>
         </aside>
       </div>
     </div>
@@ -73,7 +86,9 @@ import Icon from '../components/Icon.astro';
     height: 420px;
     border: 0;
     border-radius: var(--radius);
-    box-shadow: var(--shadow);
+    box-shadow:
+      0 28px 60px -18px rgba(59, 42, 130, 0.45),
+      0 14px 32px -10px rgba(37, 192, 212, 0.4);
     filter: saturate(0.9);
   }
 
@@ -83,38 +98,59 @@ import Icon from '../components/Icon.astro';
     align-content: start;
   }
 
-  .plain-list {
+  .accesos {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: grid;
+    gap: 0.9rem;
   }
 
-  .plain-list li {
+  .acceso {
     display: flex;
     align-items: flex-start;
-    gap: 0.6rem;
-    margin-bottom: 0.7rem;
-  }
-
-  .plain-list li > span {
-    flex: 1;
-  }
-
-  .plain-list li > svg {
-    flex: none;
-    margin-top: 0.2rem;
-    color: var(--brand-700);
-  }
-
-  .plano-note {
-    border: 1px dashed var(--accent-gold);
+    gap: 0.9rem;
+    background: var(--bg);
+    border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 1rem 1.25rem;
-    background: rgba(232, 163, 61, 0.08);
+    padding: 1rem 1.15rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
-  .plano-note p {
-    margin: 0.6rem 0 0;
+  .acceso:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 18px 36px -16px rgba(43, 27, 94, 0.3),
+      -14px 18px 40px -14px rgba(37, 192, 212, 0.45),
+      14px -18px 40px -14px rgba(119, 79, 240, 0.55);
+  }
+
+  .acceso-ico {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    flex: none;
+    border-radius: 50%;
+    color: #fff;
+    background: linear-gradient(135deg, var(--from), var(--to));
+    box-shadow: 0 10px 22px -8px rgba(37, 192, 212, 0.45);
+  }
+
+  .acceso-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .acceso-body strong {
+    color: var(--ink);
+  }
+
+  .acceso-body span {
+    color: var(--muted);
+    font-size: 0.93rem;
   }
 
   @media (max-width: 820px) {

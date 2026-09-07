@@ -1,0 +1,166 @@
+---
+// Componente: Carrusel de imágenes con flechas y puntos
+const base = import.meta.env.BASE_URL;
+
+const slides = [
+  { src: base + 'img/hero/hero-slide-1.jpg', title: 'Inauguración oficial' },
+  { src: base + 'img/hero/hero-slide-2.jpg', title: 'Pabellones de expositores' },
+  { src: base + 'img/hero/hero-slide-3.jpg', title: 'Visitantes recorriendo la feria' },
+  { src: base + 'img/hero/hero-slide-4.jpg', title: 'Empresas y productos' },
+  { src: base + 'img/hero/hero-slide-5.jpg', title: 'Ambiente del evento' },
+];
+---
+
+<section class="hero-carousel" aria-label="Carrusel de imágenes">
+  {
+    slides.map((s, i) => (
+      <div
+        class:list={['hero-slide', i === 0 && 'is-active']}
+        aria-hidden={i !== 0}
+      >
+        <img src={s.src} alt={s.title} loading={i === 0 ? 'eager' : 'lazy'} />
+      </div>
+    ))
+  }
+  <div class="hero-carousel-controls" aria-hidden="true">
+    {
+      slides.map((_, i) => (
+        <button
+          class:list={['hero-dot', i === 0 && 'is-active']}
+          type="button"
+          aria-label={`Ir a la diapositiva ${i + 1}`}
+        ></button>
+      ))
+    }
+  </div>
+  <button class="hero-arrow hero-arrow--prev" type="button" aria-label="Anterior">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><polyline points="15 18 9 12 15 6"></polyline></svg>
+  </button>
+  <button class="hero-arrow hero-arrow--next" type="button" aria-label="Siguiente">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><polyline points="9 18 15 12 9 6"></polyline></svg>
+  </button>
+</section>
+
+<style>
+  .hero-carousel {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: var(--radius);
+  }
+
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+
+  .hero-slide.is-active {
+    opacity: 1;
+  }
+
+  .hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-carousel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(43, 27, 94, 0.1) 0%, rgba(43, 27, 94, 0.3) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero-carousel-controls {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    gap: 0.6rem;
+  }
+
+  .hero-dot {
+    width: 12px;
+    height: 12px;
+    border: 2px solid #fff;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    border-radius: 50%;
+  }
+
+  .hero-dot.is-active {
+    background: #fff;
+  }
+
+  .hero-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    width: 46px;
+    height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    background: rgba(43, 27, 94, 0.28);
+    backdrop-filter: blur(3px);
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .hero-arrow:hover {
+    transform: translateY(-50%) scale(1.1);
+    background: rgba(43, 27, 94, 0.5);
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.25);
+  }
+
+  .hero-arrow:active {
+    transform: translateY(-50%) scale(0.96);
+  }
+
+  .hero-arrow--prev {
+    left: 1rem;
+  }
+
+  .hero-arrow--next {
+    right: 1rem;
+  }
+</style>
+
+<script>
+  const carousel = document.querySelector('.hero-carousel');
+  if (carousel) {
+    const slides = Array.from(carousel.querySelectorAll('.hero-slide'));
+    const dots = Array.from(carousel.querySelectorAll('.hero-dot'));
+    const prev = carousel.querySelector('.hero-arrow--prev');
+    const next = carousel.querySelector('.hero-arrow--next');
+    let current = 0;
+
+    const goTo = (i) => {
+      current = (i + slides.length) % slides.length;
+      slides.forEach((s, idx) => {
+        s.classList.toggle('is-active', idx === current);
+        s.setAttribute('aria-hidden', idx !== current ? 'true' : 'false');
+      });
+      dots.forEach((d, idx) => d.classList.toggle('is-active', idx === current));
+    };
+
+    prev?.addEventListener('click', () => goTo(current - 1));
+    next?.addEventListener('click', () => goTo(current + 1));
+    dots.forEach((d, idx) => d.addEventListener('click', () => goTo(idx)));
+
+    setInterval(() => goTo(current + 1), 6000);
+  }
+</script>

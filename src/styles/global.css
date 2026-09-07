@@ -1,26 +1,97 @@
 /* ==========================================================================
    ExpoJuy 2026 — Sistema de diseño provisorio
-   Paleta inspirada en los documentos oficiales (azul #044463) y el norte
-   argentino (tierra, ámbar). Reemplazable por el Kit de Diseño oficial.
+   Paleta · Blanco/tonos blancos + violeta
+   Reemplazable por el Kit de Diseño oficial.
    ========================================================================== */
 
+/* ---------- Tipografía oficial (Kit de Diseño: Ambit) ---------- */
+@font-face {
+  font-family: 'Ambit';
+  src: url('/fonts/Ambit-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ambit';
+  src: url('/fonts/Ambit-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ambit';
+  src: url('/fonts/Ambit-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ambit';
+  src: url('/fonts/Ambit-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --brand-900: #032f47;
-  --brand-800: #044463;
-  --brand-700: #065a82;
-  --brand-600: #0a74a5;
-  --accent-gold: #e8a33d;
-  --accent-gold-dark: #c98220;
-  --accent-terracotta: #c05a3c;
-  --ink: #16242f;
-  --muted: #5c6b78;
-  --bg: #f7f4ec;
-  --bg-alt: #ffffff;
-  --line: #dfe5ea;
-  --shadow: 0 10px 30px rgba(3, 47, 71, 0.08);
+  --brand-900: #2B1B5E;
+  --brand-800: #3B2A82;
+  --brand-700: #4E3AA8;
+  --brand-600: #6143C9;
+  --brand-500: #774FF0;
+  --turquesa: #25C0D4;
+  --lavanda: #BB8CFF;
+  --accent-gold: #A18BFF;
+  --accent-gold-dark: #5A3FC0;
+  --accent-terracotta: #9A7BF5;
+  --ink: #111111;
+  --muted: #4a4a4a;
+  --bg: #ffffff;
+  --bg-alt: #f6f4fb;
+  --line: #e4dff0;
+  --surface: #ffffff;
+  --header-bg: rgba(255, 255, 255, 0.92);
+  --link: var(--brand-700);
+  --tint-soft: rgba(59, 42, 130, 0.08);
+  --tint-border: rgba(59, 42, 130, 0.18);
+  --shadow: 0 10px 30px rgba(119, 79, 240, 0.10);
   --radius: 14px;
-  --font-head: 'Poppins', 'Segoe UI', system-ui, sans-serif;
-  --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  /* Tipografía oficial del Kit: Ambit.
+     Revertir a Poppins/Inter: descomentar estas líneas y comentar las de Ambit.
+     --font-head: 'Poppins', 'Segoe UI', system-ui, sans-serif;
+     --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  */
+  --font-head: 'Ambit', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Ambit', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+html[data-theme='dark'] {
+  color-scheme: dark;
+  --brand-900: #1b1140;
+  --brand-800: #2a1d5e;
+  --brand-700: #3b2a82;
+  --brand-600: #6143c9;
+  --brand-500: #8a6bf5;
+  --turquesa: #41d2e4;
+  --lavanda: #c9a8ff;
+  --accent-gold: #b79fff;
+  --accent-gold-dark: #8a6bf5;
+  --accent-terracotta: #a88bff;
+  --ink: #f2eefc;
+  --muted: #b9b0d4;
+  --bg: #121214;
+  --bg-alt: #1a1a1f;
+  --line: #26262e;
+  --surface: #1a1a1f;
+  --header-bg: rgba(18, 18, 20, 0.92);
+  --link: var(--accent-gold);
+  --tint-soft: rgba(161, 139, 255, 0.10);
+  --tint-border: rgba(161, 139, 255, 0.28);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.50);
 }
 
 *,
@@ -49,12 +120,12 @@ h4,
 h5 {
   font-family: var(--font-head);
   line-height: 1.2;
-  color: var(--brand-900);
+  color: var(--ink);
   margin: 0 0 0.5em;
 }
 
 a {
-  color: var(--brand-700);
+  color: var(--link);
   text-decoration: none;
 }
 
@@ -87,7 +158,7 @@ img {
 }
 
 :focus-visible {
-  outline: 3px solid var(--accent-gold);
+  outline: 3px solid var(--brand-500);
   outline-offset: 2px;
 }
 
@@ -106,44 +177,33 @@ img {
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease, transform 0.1s ease,
     box-shadow 0.2s ease;
-  box-shadow: 0 8px 20px -10px rgba(3, 47, 71, 0.35);
+  box-shadow: 0 8px 20px -10px rgba(43, 27, 94, 0.35);
 }
 
 .btn:active {
   transform: translateY(1px);
 }
 
-.btn-primary {
-  background: linear-gradient(135deg, var(--brand-700), var(--brand-900));
-  color: #fff;
-}
-
-.btn-primary:hover {
-  background: linear-gradient(135deg, var(--brand-600), var(--brand-800));
-  color: #fff;
-  box-shadow: 0 12px 26px -10px rgba(3, 47, 71, 0.5);
-}
-
 .btn-accent {
-  background: linear-gradient(135deg, #f0b35a, var(--accent-gold-dark));
-  color: var(--brand-900);
+  background: linear-gradient(135deg, var(--brand-500), var(--accent-gold-dark));
+  color: #fff;
 }
 
 .btn-accent:hover {
-  background: linear-gradient(135deg, #f6c274, #c98220);
+  background: linear-gradient(135deg, var(--brand-600), var(--accent-gold-dark));
   color: #fff;
 }
 
 .btn-outline {
-  border-color: var(--brand-800);
-  color: var(--brand-800);
+  border-color: var(--link);
+  color: var(--link);
   background: transparent;
   box-shadow: none;
 }
 
 .btn-outline:hover {
-  background: var(--brand-800);
-  color: #fff;
+  background: var(--link);
+  color: var(--bg);
 }
 
 /* ---------- Secciones ---------- */
@@ -166,7 +226,7 @@ img {
   letter-spacing: 0.12em;
   font-size: 0.8rem;
   font-weight: 700;
-  color: var(--accent-terracotta);
+  color: var(--turquesa);
   margin-bottom: 0.5rem;
 }
 
@@ -174,9 +234,9 @@ img {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  background: rgba(4, 68, 99, 0.08);
-  color: var(--brand-800);
-  border: 1px solid rgba(4, 68, 99, 0.18);
+  background: color-mix(in srgb, var(--turquesa) 12%, transparent);
+  color: var(--turquesa);
+  border: 1px solid color-mix(in srgb, var(--turquesa) 45%, transparent);
   border-radius: 999px;
   padding: 0.25rem 0.85rem;
   font-size: 0.8rem;
@@ -192,15 +252,9 @@ img {
   height: 52px;
   flex: none;
   border-radius: 50%;
-  color: var(--brand-800);
-  background: rgba(4, 68, 99, 0.08);
-  border: 1px solid rgba(4, 68, 99, 0.15);
-}
-
-.icon-circle--gold {
-  color: var(--accent-gold-dark);
-  background: rgba(232, 163, 61, 0.14);
-  border-color: rgba(232, 163, 61, 0.3);
+  color: var(--ink);
+  background: var(--tint-soft);
+  border: 1px solid var(--tint-border);
 }
 
 /* ---------- Fondo decorativo de secciones ---------- */
@@ -214,8 +268,8 @@ img {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(700px 260px at 10% -5%, rgba(4, 68, 99, 0.06), transparent 65%),
-    radial-gradient(700px 260px at 95% 10%, rgba(232, 163, 61, 0.1), transparent 65%);
+    radial-gradient(700px 260px at 10% -5%, rgba(59, 42, 130, 0.06), transparent 65%),
+    radial-gradient(700px 260px at 95% 10%, rgba(97, 67, 201, 0.1), transparent 65%);
 }
 
 /* ---------- Grids ---------- */
@@ -261,7 +315,7 @@ img {
 
 .agenda-table th {
   font-family: var(--font-head);
-  color: var(--brand-800);
+  color: var(--ink);
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -305,65 +359,7 @@ img {
   font-weight: 600;
   margin-bottom: 0.35rem;
   font-size: 0.9rem;
-  color: var(--brand-900);
-}
-
-.field input,
-.field select,
-.field textarea {
-  width: 100%;
-  padding: 0.7rem 0.9rem;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  font: inherit;
-  background: var(--bg);
-}
-
-.field input:focus,
-.field select:focus,
-.field textarea:focus {
-  outline: 3px solid rgba(232, 163, 61, 0.5);
-  border-color: var(--accent-gold);
-}
-
-/* ---------- FAQ ---------- */
-.faq-item {
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--bg-alt);
-  margin-bottom: 0.9rem;
-  overflow: hidden;
-}
-
-.faq-item summary {
-  cursor: pointer;
-  list-style: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1.1rem 1.3rem;
-  font-family: var(--font-head);
-  font-weight: 600;
-  color: var(--brand-900);
-}
-
-.faq-item summary::-webkit-details-marker {
-  display: none;
-}
-
-.faq-item summary::after {
-  content: '+';
-  font-size: 1.4rem;
-  color: var(--accent-gold-dark);
-}
-
-.faq-item[open] summary::after {
-  content: '−';
-}
-
-.faq-body {
-  padding: 0 1.3rem 1.2rem;
+  color: var(--ink);
 }
 
 /* ---------- Footer ---------- */
@@ -372,6 +368,10 @@ img {
   color: rgba(255, 255, 255, 0.82);
   padding: 3rem 0 2rem;
   margin-top: 3rem;
+}
+
+html[data-theme='dark'] .site-footer {
+  background: linear-gradient(180deg, #1b1140 0%, #121214 55%);
 }
 
 .site-footer a {
@@ -393,16 +393,79 @@ img {
   font-size: 1.05rem;
 }
 
-.footer-bottom {
-  margin-top: 2.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  font-size: 0.85rem;
-  text-align: center;
-}
-
 @media (max-width: 640px) {
   .section {
     padding: 3rem 0;
   }
+}
+
+/* ---------- Formulario de contacto (componente React) ---------- */
+.contact-form {
+  padding: 1.7rem 1.8rem;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(var(--bg), var(--bg)) padding-box,
+    linear-gradient(135deg, var(--turquesa), var(--brand-500)) border-box;
+  border-radius: var(--radius);
+  box-shadow: 0 16px 34px -20px rgba(37, 192, 212, 0.4);
+}
+
+.contact-form .btn {
+  margin-top: 0.7rem;
+  width: 100%;
+}
+
+.contact-form .btn.btn-send {
+  padding: 0.95rem 1.6rem;
+  font-size: 1.02rem;
+  letter-spacing: 0.01em;
+  box-shadow: 0 14px 30px -12px rgba(119, 79, 240, 0.6);
+}
+
+.contact-form .btn.btn-send:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 36px -12px rgba(119, 79, 240, 0.75);
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 0.72rem 0.95rem;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  font: inherit;
+  background: var(--bg);
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+.field input:hover,
+.field select:hover,
+.field textarea:hover {
+  border-color: color-mix(in srgb, var(--turquesa) 55%, var(--line));
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--turquesa);
+  background: #fff;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--turquesa) 20%, transparent);
+}
+
+.form-status {
+  margin-top: 0.9rem;
+  font-weight: 600;
+}
+
+.form-status.ok {
+  color: #1e7d46;
+}
+
+.form-status.error {
+  color: var(--accent-terracotta);
 }
