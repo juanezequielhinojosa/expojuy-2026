@@ -11,6 +11,8 @@ const stats = [
   { icon: 'calendar', target: 4, suffix: '', label: 'días de eventos' },
   { icon: 'globe', target: 4, suffix: '', label: 'países del Corredor' },
 ];
+
+const statWidth = (s) => `${(s.target.toLocaleString('es-AR').length + s.suffix.length).toFixed(1)}ch`;
 ---
 
 <section class="hero">
@@ -100,6 +102,7 @@ const stats = [
                 class="hero-stat-num"
                 data-target={s.target}
                 data-suffix={s.suffix}
+                style={`min-width: ${statWidth(s)}`}
               >0{s.suffix}</span>
               <span class="hero-stat-label">{s.label}</span>
             </span>
@@ -418,12 +421,12 @@ const stats = [
     color: #fff;
     line-height: 1.1;
     font-variant-numeric: tabular-nums;
-    min-width: 2.4ch;
   }
 
   .hero-stat-label {
     font-size: 0.82rem;
     color: rgba(255, 255, 255, 0.75);
+    margin-left: 0.4rem;
   }
 
   @media (max-width: 920px) {
