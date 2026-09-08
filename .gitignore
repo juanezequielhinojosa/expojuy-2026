@@ -24,3 +24,6 @@ dev*.err.log
 
 # jetbrains setting folder
 .idea/
+
+# local agent instructions (not shared)
+AGENTS.md
