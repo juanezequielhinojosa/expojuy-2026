@@ -127,6 +127,12 @@ const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     }
   }
 
+  @media (pointer: coarse) {
+    .wa-tooltip {
+      display: none;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .wa-float {
       animation: none;
@@ -178,7 +184,7 @@ const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
       float.classList.add('dragging');
       float.setPointerCapture?.(pointer.pointerId);
-      e.preventDefault();
+      if (!e.touches) e.preventDefault();
     };
 
     const onPointerMove = (e) => {
