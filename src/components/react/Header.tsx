@@ -1,5 +1,5 @@
 // Encabezado interactivo (React): navegación, tema y redes
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { site } from '../../data/site';
 
 const base = import.meta.env.BASE_URL;
@@ -67,8 +67,14 @@ function SocialIcon({ label, url, icon }: { label: string; url: string; icon: Re
 export default function Header({ currentPath }: Props) {
   const [navOpen, setNavOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
+  const synced = useRef(false);
 
   useEffect(() => {
+    if (!synced.current) {
+      synced.current = true;
+      setIsDark(document.documentElement.getAttribute('data-theme') === 'dark');
+      return;
+    }
     const root = document.documentElement;
     root.setAttribute('data-theme', isDark ? 'dark' : 'light');
     document
@@ -106,7 +112,13 @@ export default function Header({ currentPath }: Props) {
             type="button"
             aria-label="Cambiar tema"
             aria-pressed={isDark ? 'true' : 'false'}
-            onClick={() => setIsDark((v) => !v)}
+            onClick={() => {
+              const next = !isDark;
+              try {
+                localStorage.setItem('expojuy-theme', next ? 'dark' : 'light');
+              } catch (_) {}
+              setIsDark(next);
+            }}
           >
             <svg
               className="theme-ico theme-ico-sun"

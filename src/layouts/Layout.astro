@@ -47,6 +47,17 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://expojuy2026
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#3B2A82" />
+    <script is:inline>
+      (function () {
+        try {
+          var saved = localStorage.getItem('expojuy-theme');
+          var isDark = saved === 'dark';
+          document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', isDark ? '#121214' : '#3B2A82');
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <Header currentPath={Astro.url.pathname} client:load />
