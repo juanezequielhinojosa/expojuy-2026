@@ -71,20 +71,22 @@ const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
   .wa-tooltip {
     position: absolute;
-    right: calc(100% + 12px);
+    right: calc(100% + 18px);
     top: 50%;
-    transform: translateY(-50%) translateX(6px);
-    background: var(--brand-900);
+    transform: translateY(-50%) translateX(8px);
+    background: linear-gradient(135deg, #25d366, #128c7e);
     color: #fff;
-    font-size: 0.85rem;
-    font-weight: 500;
-    padding: 0.5rem 0.9rem;
-    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1.25;
+    text-align: center;
+    padding: 0.65rem 1.1rem;
+    border-radius: 14px 14px 14px 6px;
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
     transition: all 0.25s ease;
-    box-shadow: 0 6px 16px -4px rgba(59, 42, 130, 0.3);
+    box-shadow: 0 10px 24px -8px rgba(18, 140, 126, 0.55);
   }
 
   .wa-tooltip::after {
@@ -93,8 +95,8 @@ const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     left: 100%;
     top: 50%;
     transform: translateY(-50%);
-    border: 6px solid transparent;
-    border-left-color: var(--brand-900);
+    border: 7px solid transparent;
+    border-left-color: #128c7e;
   }
 
   .wa-float:not(.dragging):hover .wa-tooltip {
